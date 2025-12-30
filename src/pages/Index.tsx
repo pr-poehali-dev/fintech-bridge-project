@@ -56,6 +56,16 @@ const Index = () => {
     setSheetOpen(true);
   };
 
+  useEffect(() => {
+    if (!sheetOpen) {
+      const timer = setTimeout(() => {
+        setSelectedNode(null);
+        setActiveNode(null);
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [sheetOpen]);
+
   const centerX = 500;
   const centerY = 340;
   const radius = 260;
