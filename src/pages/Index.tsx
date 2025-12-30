@@ -1,12 +1,52 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
+
+interface Service {
+  id: string;
+  name: string;
+  type: string;
+  category: string;
+  icon: string;
+  description: string;
+  price: string;
+  cta: string;
+}
+
+const defaultServices: Service[] = [
+  { id: 'wise', name: 'Wise', type: 'Финтех', category: 'kyc-fintech', icon: 'CreditCard', description: 'Мультивалютный банк с IBAN', price: '120 USDT', cta: 'Подключить' },
+  { id: 'revolut', name: 'Revolut', type: 'Финтех', category: 'kyc-fintech', icon: 'Wallet', description: 'Швейцарский нож финансов', price: '350 USDT', cta: 'Подключить' },
+  { id: 'payoneer', name: 'Payoneer', type: 'Финтех', category: 'kyc-fintech', icon: 'Briefcase', description: 'Платежи для фрилансеров', price: '100 USDT', cta: 'Подключить' },
+  { id: 'grey', name: 'Grey', type: 'Финтех', category: 'kyc-fintech', icon: 'Building2', description: 'Аналог Wise с USD-картой', price: '120 USDT', cta: 'Подключить' },
+  { id: 'neteller', name: 'Neteller', type: 'Финтех', category: 'kyc-fintech', icon: 'DollarSign', description: 'Электронный кошелёк', price: '120 USDT', cta: 'Подключить' },
+  { id: 'skrill', name: 'Skrill', type: 'Финтех', category: 'kyc-fintech', icon: 'Wallet2', description: 'Платёжная система', price: '120 USDT', cta: 'Подключить' },
+  { id: 'bybit', name: 'Bybit', type: 'Криптобиржа', category: 'kyc-crypto', icon: 'Bitcoin', description: 'Виртуальная карта с V2', price: '45 USDT', cta: 'Подключить' },
+  { id: 'bitget', name: 'Bitget', type: 'Криптобиржа', category: 'kyc-crypto', icon: 'Coins', description: 'Биржа с IBAN FR/DE', price: '120 USDT', cta: 'Подключить' },
+  { id: 'kraken', name: 'Kraken', type: 'Криптобиржа', category: 'kyc-crypto', icon: 'TrendingUp', description: 'Торговля криптовалютой', price: '100 USDT', cta: 'Подключить' },
+  { id: 'redotpay', name: 'RedotPay', type: 'Крипто-карта', category: 'kyc-crypto', icon: 'CreditCard', description: 'Крипто → фиат карта', price: '40 USDT', cta: 'Подключить' },
+  { id: 'etherfi', name: 'Ether.fi', type: 'Крипто-карта', category: 'kyc-crypto', icon: 'Sparkles', description: 'Стейкинг + карта в Apple Pay', price: '100 USDT', cta: 'Подключить' },
+  { id: 'tuyo', name: 'TUYO', type: 'Крипто-карта', category: 'kyc-crypto', icon: 'Zap', description: 'Шлюз фиат ⇄ крипта без комиссий', price: '150 USDT', cta: 'Подключить' },
+  { id: 'paypal', name: 'PayPal', type: 'Платформа', category: 'kyc-platforms', icon: 'ShoppingBag', description: 'Онлайн платежи + Perplexity Pro', price: '120 USDT', cta: 'Подключить' },
+  { id: 'spenda', name: 'Spenda', type: 'Платформа', category: 'kyc-platforms', icon: 'CreditCard', description: 'USD/NGN карта для подписок', price: '90 USDT', cta: 'Подключить' },
+  { id: 'hexacard', name: 'HexaCard', type: 'Платформа', category: 'kyc-platforms', icon: 'Sparkle', description: 'Турецкие цены на подписки', price: '150 USDT', cta: 'Подключить' }
+];
 
 const Index = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [activeSection, setActiveSection] = useState('kyc');
   const [expandedSections, setExpandedSections] = useState<string[]>(['kyc']);
   const [selectedService, setSelectedService] = useState<string | null>(null);
+  const [services, setServices] = useState<Service[]>([]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem('heystore_services');
+    if (stored) {
+      setServices(JSON.parse(stored));
+    } else {
+      localStorage.setItem('heystore_services', JSON.stringify(defaultServices));
+      setServices(defaultServices);
+    }
+  }, []);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -28,24 +68,6 @@ const Index = () => {
     { flag: '🇦🇺', name: 'Австралия', code: '+61' },
     { flag: '🇨🇦', name: 'Канада', code: '+1' },
     { flag: '🇺🇸', name: 'США', code: '+1' }
-  ];
-
-  const services = [
-    { id: 'wise', name: 'Wise', type: 'Финтех', category: 'kyc-fintech', icon: 'CreditCard', description: 'Мультивалютный банк с IBAN', price: '120 USDT', cta: 'Подключить' },
-    { id: 'revolut', name: 'Revolut', type: 'Финтех', category: 'kyc-fintech', icon: 'Wallet', description: 'Швейцарский нож финансов', price: '350 USDT', cta: 'Подключить' },
-    { id: 'payoneer', name: 'Payoneer', type: 'Финтех', category: 'kyc-fintech', icon: 'Briefcase', description: 'Платежи для фрилансеров', price: '100 USDT', cta: 'Подключить' },
-    { id: 'grey', name: 'Grey', type: 'Финтех', category: 'kyc-fintech', icon: 'Building2', description: 'Аналог Wise с USD-картой', price: '120 USDT', cta: 'Подключить' },
-    { id: 'neteller', name: 'Neteller', type: 'Финтех', category: 'kyc-fintech', icon: 'DollarSign', description: 'Электронный кошелёк', price: '120 USDT', cta: 'Подключить' },
-    { id: 'skrill', name: 'Skrill', type: 'Финтех', category: 'kyc-fintech', icon: 'Wallet2', description: 'Платёжная система', price: '120 USDT', cta: 'Подключить' },
-    { id: 'bybit', name: 'Bybit', type: 'Криптобиржа', category: 'kyc-crypto', icon: 'Bitcoin', description: 'Виртуальная карта с V2', price: '45 USDT', cta: 'Подключить' },
-    { id: 'bitget', name: 'Bitget', type: 'Криптобиржа', category: 'kyc-crypto', icon: 'Coins', description: 'Биржа с IBAN FR/DE', price: '120 USDT', cta: 'Подключить' },
-    { id: 'kraken', name: 'Kraken', type: 'Криптобиржа', category: 'kyc-crypto', icon: 'TrendingUp', description: 'Торговля криптовалютой', price: '100 USDT', cta: 'Подключить' },
-    { id: 'redotpay', name: 'RedotPay', type: 'Крипто-карта', category: 'kyc-crypto', icon: 'CreditCard', description: 'Крипто → фиат карта', price: '40 USDT', cta: 'Подключить' },
-    { id: 'etherfi', name: 'Ether.fi', type: 'Крипто-карта', category: 'kyc-crypto', icon: 'Sparkles', description: 'Стейкинг + карта в Apple Pay', price: '100 USDT', cta: 'Подключить' },
-    { id: 'tuyo', name: 'TUYO', type: 'Крипто-карта', category: 'kyc-crypto', icon: 'Zap', description: 'Шлюз фиат ⇄ крипта без комиссий', price: '150 USDT', cta: 'Подключить' },
-    { id: 'paypal', name: 'PayPal', type: 'Платформа', category: 'kyc-platforms', icon: 'ShoppingBag', description: 'Онлайн платежи + Perplexity Pro', price: '120 USDT', cta: 'Подключить' },
-    { id: 'spenda', name: 'Spenda', type: 'Платформа', category: 'kyc-platforms', icon: 'CreditCard', description: 'USD/NGN карта для подписок', price: '90 USDT', cta: 'Подключить' },
-    { id: 'hexacard', name: 'HexaCard', type: 'Платформа', category: 'kyc-platforms', icon: 'Sparkle', description: 'Турецкие цены на подписки', price: '150 USDT', cta: 'Подключить' }
   ];
 
   const menuItems = [
