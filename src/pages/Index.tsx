@@ -35,6 +35,7 @@ const Index = () => {
       title: 'Активация сервисов',
       icon: 'UserCheck',
       hasSubmenu: true,
+      description: 'Финтехи и банки • Криптобиржи • Платформы',
       submenu: [
         { id: 'kyc-fintech', title: 'Финтехи и банки', icon: 'Building' },
         { id: 'kyc-crypto', title: 'Криптобиржи', icon: 'Bitcoin' },
@@ -45,13 +46,21 @@ const Index = () => {
       id: 'vpn',
       title: 'Бесплатный VPN',
       icon: 'Shield',
-      hasSubmenu: false
+      hasSubmenu: true,
+      description: '🇪🇸 🇩🇪 🇮🇹 🇸🇪 🇬🇧 🇮🇱 🇸🇬',
+      submenu: [
+        { id: 'vpn-countries', title: '🇪🇸 🇩🇪 🇮🇹 🇸🇪 🇬🇧 🇮🇱 🇸🇬', icon: 'Globe' }
+      ]
     },
     {
       id: 'esim',
       title: 'Мировые eSIM',
       icon: 'Smartphone',
-      hasSubmenu: false
+      hasSubmenu: true,
+      description: '🇬🇧 🇦🇺 🇨🇦 🇺🇸',
+      submenu: [
+        { id: 'esim-countries', title: '🇬🇧 🇦🇺 🇨🇦 🇺🇸', icon: 'Globe' }
+      ]
     },
     {
       id: 'business',
@@ -251,7 +260,7 @@ const Index = () => {
                         if (item.hasSubmenu) toggleSection(item.id);
                       }}
                       className={`
-                        w-full flex items-center justify-between px-4 py-3 rounded-lg
+                        w-full flex flex-col items-start px-4 py-3 rounded-lg
                         transition-all duration-200
                         ${activeSection === item.id
                           ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
@@ -259,16 +268,23 @@ const Index = () => {
                         }
                       `}
                     >
-                      <div className="flex items-center gap-3">
-                        <Icon name={item.icon} size={20} />
-                        <span className="font-medium">{item.title}</span>
+                      <div className="flex items-center justify-between w-full">
+                        <div className="flex items-center gap-3">
+                          <Icon name={item.icon} size={20} />
+                          <span className="font-medium">{item.title}</span>
+                        </div>
+                        {item.hasSubmenu && (
+                          <Icon 
+                            name="ChevronDown" 
+                            size={16}
+                            className={`transition-transform ${expandedSections.includes(item.id) ? 'rotate-180' : ''}`}
+                          />
+                        )}
                       </div>
-                      {item.hasSubmenu && (
-                        <Icon 
-                          name="ChevronDown" 
-                          size={16}
-                          className={`transition-transform ${expandedSections.includes(item.id) ? 'rotate-180' : ''}`}
-                        />
+                      {item.description && (
+                        <div className="text-xs text-gray-500 dark:text-gray-400 mt-1 ml-8">
+                          {item.description}
+                        </div>
                       )}
                     </button>
 
