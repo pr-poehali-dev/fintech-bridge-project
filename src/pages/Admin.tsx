@@ -14,6 +14,8 @@ interface Service {
   description: string;
   price: string;
   cta: string;
+  backgroundImage?: string;
+  logoSvg?: string;
 }
 
 const Admin = () => {
@@ -385,45 +387,80 @@ const Admin = () => {
 
             <div className="grid grid-cols-1 gap-4 mt-6">
               {services.map((service) => (
-                <div key={service.id} className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-start gap-4 flex-1">
-                      <div className="w-12 h-12 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center flex-shrink-0">
-                        <Icon name={service.icon} size={24} className="text-blue-600 dark:text-blue-400" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
-                          {service.name}
-                        </h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                          {service.type} • {service.category}
-                        </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
-                          {service.description}
-                        </p>
-                        <p className="text-lg font-bold text-gray-900 dark:text-white">
-                          {service.price}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex gap-2 ml-4">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          setEditingService(service);
-                          setIsAddingNew(false);
+                <div key={service.id} className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                  <div className="relative">
+                    {service.backgroundImage && (
+                      <div 
+                        className="absolute inset-0 opacity-20"
+                        style={{
+                          backgroundImage: `url(${service.backgroundImage})`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center',
+                          height: '100%'
                         }}
-                      >
-                        <Icon name="Pencil" size={14} />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleDeleteService(service.id)}
-                      >
-                        <Icon name="Trash2" size={14} />
-                      </Button>
+                      />
+                    )}
+                    <div className="relative z-10 p-6">
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-start gap-4 flex-1">
+                          {service.logoSvg ? (
+                            <div className="w-16 h-16 flex items-center justify-center flex-shrink-0 bg-white dark:bg-gray-900 rounded-lg p-2">
+                              <img src={service.logoSvg} alt={service.name} className="w-full h-full object-contain" />
+                            </div>
+                          ) : (
+                            <div className="w-12 h-12 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center flex-shrink-0">
+                              <Icon name={service.icon} size={24} className="text-blue-600 dark:text-blue-400" />
+                            </div>
+                          )}
+                          <div className="flex-1">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
+                              {service.name}
+                            </h3>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                              {service.type} • {service.category}
+                            </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
+                              {service.description}
+                            </p>
+                            <p className="text-lg font-bold text-gray-900 dark:text-white">
+                              {service.price}
+                            </p>
+                            {(service.backgroundImage || service.logoSvg) && (
+                              <div className="flex gap-2 mt-2">
+                                {service.backgroundImage && (
+                                  <span className="text-xs px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded">
+                                    Фон
+                                  </span>
+                                )}
+                                {service.logoSvg && (
+                                  <span className="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded">
+                                    Логотип
+                                  </span>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex gap-2 ml-4">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              setEditingService(service);
+                              setIsAddingNew(false);
+                            }}
+                          >
+                            <Icon name="Pencil" size={14} />
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleDeleteService(service.id)}
+                          >
+                            <Icon name="Trash2" size={14} />
+                          </Button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -545,6 +582,22 @@ const ServiceForm = ({
     onSave(formData);
   };
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, type: 'background' | 'logo') => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const result = reader.result as string;
+      if (type === 'background') {
+        setFormData({ ...formData, backgroundImage: result });
+      } else {
+        setFormData({ ...formData, logoSvg: result });
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border-2 border-blue-500 mb-6">
       <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
@@ -649,6 +702,64 @@ const ServiceForm = ({
               className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white"
               required
             />
+          </div>
+        </div>
+
+        <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+          <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            Визуальное оформление
+          </h4>
+          
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Фоновое изображение
+                <span className="text-xs text-gray-500 ml-2">(400x250px рекомендуется)</span>
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleImageUpload(e, 'background')}
+                className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              />
+              {formData.backgroundImage && (
+                <div className="mt-2">
+                  <img src={formData.backgroundImage} alt="Preview" className="w-full h-24 object-cover rounded-lg" />
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, backgroundImage: undefined })}
+                    className="text-xs text-red-600 dark:text-red-400 mt-1 hover:underline"
+                  >
+                    Удалить
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                SVG логотип
+                <span className="text-xs text-gray-500 ml-2">(100x100px рекомендуется)</span>
+              </label>
+              <input
+                type="file"
+                accept=".svg,image/svg+xml"
+                onChange={(e) => handleImageUpload(e, 'logo')}
+                className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              />
+              {formData.logoSvg && (
+                <div className="mt-2">
+                  <img src={formData.logoSvg} alt="Logo" className="w-20 h-20 object-contain rounded-lg bg-gray-100 dark:bg-gray-700 p-2" />
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, logoSvg: undefined })}
+                    className="text-xs text-red-600 dark:text-red-400 mt-1 hover:underline"
+                  >
+                    Удалить
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 

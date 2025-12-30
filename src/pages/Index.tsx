@@ -11,6 +11,8 @@ interface Service {
   description: string;
   price: string;
   cta: string;
+  backgroundImage?: string;
+  logoSvg?: string;
 }
 
 const defaultServices: Service[] = [
@@ -225,8 +227,8 @@ const Index = () => {
             key={service.id}
             onClick={() => setSelectedService(service.id)}
             className={`
-              group relative bg-white dark:bg-gray-800 rounded-xl p-5 
-              border-2 transition-all duration-200 text-left
+              group relative rounded-xl p-5 
+              border-2 transition-all duration-200 text-left overflow-hidden
               hover:shadow-lg hover:-translate-y-0.5
               ${selectedService === service.id 
                 ? 'border-blue-500 shadow-lg' 
@@ -234,31 +236,50 @@ const Index = () => {
               }
             `}
           >
-            <div className="flex items-start justify-between mb-3">
-              <div className="w-11 h-11 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
-                <Icon name={service.icon} size={22} className="text-blue-600 dark:text-blue-400" />
+            {service.backgroundImage && (
+              <div 
+                className="absolute inset-0 opacity-20 dark:opacity-10"
+                style={{
+                  backgroundImage: `url(${service.backgroundImage})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              />
+            )}
+            
+            <div className="relative z-10 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg p-5 -m-5">
+              <div className="flex items-start justify-between mb-3">
+                {service.logoSvg ? (
+                  <div className="w-11 h-11 flex items-center justify-center">
+                    <img src={service.logoSvg} alt={service.name} className="w-full h-full object-contain" />
+                  </div>
+                ) : (
+                  <div className="w-11 h-11 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
+                    <Icon name={service.icon} size={22} className="text-blue-600 dark:text-blue-400" />
+                  </div>
+                )}
               </div>
-            </div>
-            
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
-              {service.name}
-            </h3>
-            
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
-              {service.type}
-            </p>
-            
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 min-h-[36px] line-clamp-2">
-              {service.description}
-            </p>
-            
-            <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-700">
-              <span className="text-base font-bold text-gray-900 dark:text-white">
-                {service.price}
-              </span>
-              <div className="flex items-center text-sm font-medium text-blue-600 dark:text-blue-400">
-                {service.cta}
-                <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
+              
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
+                {service.name}
+              </h3>
+              
+              <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+                {service.type}
+              </p>
+              
+              <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 min-h-[36px] line-clamp-2">
+                {service.description}
+              </p>
+              
+              <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-700">
+                <span className="text-base font-bold text-gray-900 dark:text-white">
+                  {service.price}
+                </span>
+                <div className="flex items-center text-sm font-medium text-blue-600 dark:text-blue-400">
+                  {service.cta}
+                  <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                </div>
               </div>
             </div>
           </button>
