@@ -275,7 +275,7 @@ const Index = () => {
                       <Icon name={item.icon} size={20} className="absolute left-3 flex-shrink-0" />
                       <span className="font-medium ml-8">{item.title}</span>
                       {(item.badge || item.hasSubmenu) && (
-                        <div className="flex items-center gap-1.5 flex-shrink-0">
+                        <div className="flex items-center gap-1.5 flex-shrink-0 ml-2">
                           {item.badge && (
                             <span className="px-1.5 py-0.5 text-xs font-semibold bg-blue-500 text-white rounded">
                               {item.badge}
