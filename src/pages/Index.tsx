@@ -5,7 +5,7 @@ import Icon from '@/components/ui/icon';
 const Index = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [activeSection, setActiveSection] = useState('kyc');
-  const [expandedSections, setExpandedSections] = useState<string[]>(['esim']);
+  const [expandedSections, setExpandedSections] = useState<string[]>([]);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -23,10 +23,10 @@ const Index = () => {
   ];
 
   const esimCountries = [
-    { flag: '🇬🇧', name: 'Великобритания', price: '₽499/мес' },
-    { flag: '🇦🇺', name: 'Австралия', price: '₽599/мес' },
-    { flag: '🇨🇦', name: 'Канада', price: '₽549/мес' },
-    { flag: '🇺🇸', name: 'США', price: '₽699/мес' }
+    { flag: '🇬🇧', name: 'Великобритания', code: '+44' },
+    { flag: '🇦🇺', name: 'Австралия', code: '+61' },
+    { flag: '🇨🇦', name: 'Канада', code: '+1' },
+    { flag: '🇺🇸', name: 'США', code: '+1' }
   ];
 
   const menuItems = [
@@ -35,7 +35,6 @@ const Index = () => {
       title: 'Активация сервисов',
       icon: 'UserCheck',
       hasSubmenu: true,
-      inlineSubmenu: true,
       submenu: [
         { id: 'kyc-fintech', title: 'Финтехи и банки', icon: 'Building' },
         { id: 'kyc-crypto', title: 'Криптобиржи', icon: 'Bitcoin' },
@@ -48,7 +47,6 @@ const Index = () => {
       badge: 'FREE',
       icon: 'Shield',
       hasSubmenu: true,
-      inlineSubmenu: true,
       submenu: [
         { id: 'vpn-es', title: '🇪🇸 Испания', icon: 'MapPin' },
         { id: 'vpn-de', title: '🇩🇪 Германия', icon: 'MapPin' },
@@ -63,13 +61,7 @@ const Index = () => {
       id: 'esim',
       title: 'Мировые eSIM',
       icon: 'Smartphone',
-      hasSubmenu: true,
-      submenu: [
-        { id: 'esim-gb', title: '🇬🇧 Великобритания', price: '+44', icon: 'Phone' },
-        { id: 'esim-au', title: '🇦🇺 Австралия', price: '+61', icon: 'Phone' },
-        { id: 'esim-ca', title: '🇨🇦 Канада', price: '+1', icon: 'Phone' },
-        { id: 'esim-us', title: '🇺🇸 США', price: '+1', icon: 'Phone' }
-      ]
+      hasSubmenu: false
     },
     {
       id: 'business',
@@ -83,6 +75,18 @@ const Index = () => {
       icon: 'Briefcase',
       hasSubmenu: false,
       isSubitem: true
+    },
+    {
+      id: 'server',
+      title: 'Аренда сервера',
+      icon: 'Server',
+      hasSubmenu: false
+    },
+    {
+      id: 'email',
+      title: 'Почта',
+      icon: 'Mail',
+      hasSubmenu: false
     }
   ];
 
@@ -157,7 +161,7 @@ const Index = () => {
                   {country.name}
                 </span>
                 <span className="text-sm text-gray-600 dark:text-gray-400">
-                  {country.price}
+                  {country.code}
                 </span>
               </div>
             ))}
@@ -266,10 +270,10 @@ const Index = () => {
                     <button
                       onClick={() => {
                         setActiveSection(item.id);
-                        if (item.hasSubmenu && !item.inlineSubmenu) toggleSection(item.id);
+                        if (item.hasSubmenu) toggleSection(item.id);
                       }}
                       className={`
-                        w-full flex flex-col items-start px-4 py-3 rounded-lg
+                        w-full flex items-center justify-between px-4 py-3 rounded-lg
                         transition-all duration-200
                         ${activeSection === item.id
                           ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
@@ -277,45 +281,33 @@ const Index = () => {
                         }
                       `}
                     >
-                      <div className="flex items-center justify-between w-full">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <Icon name={item.icon} size={20} />
-                          <span className="font-medium">{item.title}</span>
-                          {item.badge && (
-                            <span className="px-2 py-0.5 text-xs font-medium bg-blue-500 text-white rounded">
-                              {item.badge}
-                            </span>
-                          )}
-                        </div>
-                        {item.hasSubmenu && !item.inlineSubmenu && (
-                          <Icon 
-                            name="ChevronDown" 
-                            size={16}
-                            className={`transition-transform ${expandedSections.includes(item.id) ? 'rotate-180' : ''}`}
-                          />
+                      <div className="flex items-center gap-3">
+                        <Icon name={item.icon} size={20} />
+                        <span className="font-medium">{item.title}</span>
+                        {item.badge && (
+                          <span className="px-2 py-0.5 text-xs font-medium bg-blue-500 text-white rounded">
+                            {item.badge}
+                          </span>
                         )}
                       </div>
-                      {item.inlineSubmenu && item.submenu && (
-                        <div className="text-xs text-gray-500 dark:text-gray-400 mt-1.5 flex flex-wrap gap-1.5">
-                          {item.submenu.map((sub, idx) => (
-                            <span key={sub.id}>
-                              {sub.title}
-                              {idx < item.submenu!.length - 1 && <span className="ml-1.5">•</span>}
-                            </span>
-                          ))}
-                        </div>
+                      {item.hasSubmenu && (
+                        <Icon 
+                          name="ChevronDown" 
+                          size={16}
+                          className={`transition-transform ${expandedSections.includes(item.id) ? 'rotate-180' : ''}`}
+                        />
                       )}
                     </button>
 
                     {/* Подменю */}
-                    {item.hasSubmenu && !item.inlineSubmenu && expandedSections.includes(item.id) && (
+                    {item.hasSubmenu && expandedSections.includes(item.id) && (
                       <div className="ml-4 mt-1 space-y-1">
                         {item.submenu?.map((subitem) => (
                           <button
                             key={subitem.id}
                             onClick={() => setActiveSection(subitem.id)}
                             className={`
-                              w-full flex items-center justify-between px-4 py-2 rounded-lg
+                              w-full flex items-center gap-3 px-4 py-2 rounded-lg
                               transition-all duration-200
                               ${activeSection === subitem.id
                                 ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
@@ -323,15 +315,8 @@ const Index = () => {
                               }
                             `}
                           >
-                            <div className="flex items-center gap-2">
-                              <Icon name={subitem.icon} size={16} />
-                              <span className="text-sm">{subitem.title}</span>
-                            </div>
-                            {subitem.price && (
-                              <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
-                                {subitem.price}
-                              </span>
-                            )}
+                            <Icon name={subitem.icon} size={16} />
+                            <span className="text-sm">{subitem.title}</span>
                           </button>
                         ))}
                       </div>
