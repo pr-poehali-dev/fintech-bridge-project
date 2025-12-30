@@ -15,30 +15,22 @@ const Index = () => {
     {
       id: 'vpn',
       title: 'Бесплатный VPN',
-      icon: 'Shield',
-      x: 120,
-      y: 80
+      icon: 'Shield'
     },
     {
       id: 'kyc',
       title: 'Верификация KYC',
-      icon: 'UserCheck',
-      x: 880,
-      y: 80
+      icon: 'UserCheck'
     },
     {
       id: 'esim',
       title: 'Мировые eSIM',
-      icon: 'Radio',
-      x: 120,
-      y: 530
+      icon: 'Radio'
     },
     {
       id: 'business',
       title: 'IT для бизнеса',
-      icon: 'Lightbulb',
-      x: 880,
-      y: 530
+      icon: 'Lightbulb'
     }
   ];
 
@@ -88,62 +80,6 @@ const Index = () => {
                     </filter>
                   </defs>
                   
-                  <line 
-                    x1="500" 
-                    y1="300" 
-                    x2="120" 
-                    y2="80" 
-                    stroke="url(#lineGradient1)" 
-                    strokeWidth="3.5"
-                    strokeLinecap="round"
-                    filter="url(#glow)"
-                    opacity="0"
-                  >
-                    <animate attributeName="opacity" from="0" to="1" dur="1s" fill="freeze" />
-                    <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="1.5s" fill="freeze" />
-                  </line>
-                  <line 
-                    x1="500" 
-                    y1="300" 
-                    x2="880" 
-                    y2="80" 
-                    stroke="url(#lineGradient1)" 
-                    strokeWidth="3.5"
-                    strokeLinecap="round"
-                    filter="url(#glow)"
-                    opacity="0"
-                  >
-                    <animate attributeName="opacity" from="0" to="1" dur="1s" begin="0.3s" fill="freeze" />
-                    <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="1.5s" begin="0.3s" fill="freeze" />
-                  </line>
-                  <line 
-                    x1="500" 
-                    y1="300" 
-                    x2="120" 
-                    y2="530" 
-                    stroke="url(#lineGradient1)" 
-                    strokeWidth="3.5"
-                    strokeLinecap="round"
-                    filter="url(#glow)"
-                    opacity="0"
-                  >
-                    <animate attributeName="opacity" from="0" to="1" dur="1s" begin="0.6s" fill="freeze" />
-                    <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="1.5s" begin="0.6s" fill="freeze" />
-                  </line>
-                  <line 
-                    x1="500" 
-                    y1="300" 
-                    x2="880" 
-                    y2="530" 
-                    stroke="url(#lineGradient1)" 
-                    strokeWidth="3.5"
-                    strokeLinecap="round"
-                    filter="url(#glow)"
-                    opacity="0"
-                  >
-                    <animate attributeName="opacity" from="0" to="1" dur="1s" begin="0.9s" fill="freeze" />
-                    <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="1.5s" begin="0.9s" fill="freeze" />
-                  </line>
                   
                   <g transform="translate(300, 180)">
                     <svg width="400" height="200" viewBox="0 0 974.28 376.03" preserveAspectRatio="xMidYMid meet">
@@ -171,9 +107,11 @@ const Index = () => {
                   
                   {services.map((service, index) => {
                     const angle = (index * 90) * (Math.PI / 180);
-                    const radius = 320;
+                    const radius = 240;
                     const centerX = 500;
                     const centerY = 300;
+                    const x = centerX + radius * Math.cos(angle);
+                    const y = centerY + radius * Math.sin(angle);
                     
                     return (
                       <g key={service.id}>
@@ -188,8 +126,8 @@ const Index = () => {
                           />
                           
                           <circle
-                            cx={service.x}
-                            cy={service.y}
+                            cx={x}
+                            cy={y}
                             r="70"
                             fill="#f3f4f6"
                             className="dark:fill-[#374151] cursor-pointer transition-all duration-500 hover:fill-[#e5e7eb] dark:hover:fill-[#4b5563]"
@@ -202,8 +140,8 @@ const Index = () => {
                             <animate attributeName="r" from="0" to="70" dur="0.6s" begin="1.2s" fill="freeze" />
                           </circle>
                           <circle
-                            cx={service.x}
-                            cy={service.y}
+                            cx={x}
+                            cy={y}
                             r="28"
                             fill="#e5e7eb"
                             className="dark:fill-[#4b5563] transition-all duration-300"
@@ -219,15 +157,15 @@ const Index = () => {
                             <animateTransform
                               attributeName="transform"
                               type="rotate"
-                              from={`0 ${service.x} ${service.y}`}
-                              to={`-360 ${service.x} ${service.y}`}
+                              from={`0 ${x} ${y}`}
+                              to={`-360 ${x} ${y}`}
                               dur="60s"
                               repeatCount="indefinite"
                             />
                             
                             <foreignObject 
-                              x={service.x - 14} 
-                              y={service.y - 14} 
+                              x={x - 14} 
+                              y={y - 14} 
                               width="28" 
                               height="28"
                               opacity="0"
@@ -239,8 +177,8 @@ const Index = () => {
                             </foreignObject>
                             
                             <text
-                              x={service.x}
-                              y={service.y + 95}
+                              x={x}
+                              y={y + 95}
                               textAnchor="middle"
                               fontSize="16"
                               fontWeight="600"
