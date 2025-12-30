@@ -1,10 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
-import ArnoldMascot from '@/components/ArnoldMascot';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 
 const Index = () => {
   const [darkMode, setDarkMode] = useState(false);
+  const [focusedNode, setFocusedNode] = useState<string | null>(null);
+  const [activeNode, setActiveNode] = useState<string | null>(null);
+  const [selectedNode, setSelectedNode] = useState<string | null>(null);
+  const [sheetOpen, setSheetOpen] = useState(false);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -15,32 +19,46 @@ const Index = () => {
     {
       id: 'vpn',
       title: 'Бесплатный VPN',
+      subtitle: 'Операционная безопасность',
       icon: 'Shield',
-      x: 120,
-      y: 80
+      description: 'Защищённое соединение с чистыми IP-адресами для доступа к глобальным сервисам',
+      angle: 0
     },
     {
       id: 'kyc',
       title: 'Верификация KYC',
+      subtitle: 'Быстрый старт',
       icon: 'UserCheck',
-      x: 880,
-      y: 80
+      description: 'Простая верификация личности для доступа к финансовым инструментам без барьеров',
+      angle: 90
     },
     {
       id: 'esim',
       title: 'Мировые eSIM',
+      subtitle: 'Цифровая мобильность',
       icon: 'Radio',
-      x: 120,
-      y: 530
+      description: 'Зарубежные номера телефонов для регистрации в международных сервисах',
+      angle: 180
     },
     {
       id: 'business',
       title: 'IT для бизнеса',
+      subtitle: 'B2B инфраструктура',
       icon: 'Lightbulb',
-      x: 880,
-      y: 530
+      description: 'Комплексные решения для масштабирования бизнеса в глобальной экосистеме',
+      angle: 270
     }
   ];
+
+  const handleNodeClick = (serviceId: string) => {
+    setActiveNode(serviceId);
+    setSelectedNode(serviceId);
+    setSheetOpen(true);
+  };
+
+  const centerX = 500;
+  const centerY = 340;
+  const radius = 260;
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark' : ''}`}>
@@ -54,7 +72,7 @@ const Index = () => {
               variant="ghost"
               size="icon"
               onClick={toggleDarkMode}
-              className="rounded-full hover:bg-white/10"
+              className="rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
             >
               <Icon name={darkMode ? 'Sun' : 'Moon'} size={20} className="text-gray-900 dark:text-white" />
             </Button>
@@ -62,25 +80,13 @@ const Index = () => {
         </header>
 
         <main className="pt-20">
-          <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-8">
+          <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-16">
             <div className="container mx-auto px-4 relative z-10">
-              <div className="relative max-w-6xl mx-auto h-[700px]">
-                <svg width="100%" height="100%" viewBox="0 0 1000 680" className="absolute inset-0">
+              <div className="relative max-w-6xl mx-auto" style={{ height: '750px' }}>
+                <svg width="100%" height="100%" viewBox="0 0 1000 750" className="absolute inset-0">
                   <defs>
-                    <linearGradient id="lineGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#00adee" stopOpacity="0.8">
-                        <animate attributeName="stop-color" values="#00adee;#faaf3f;#00adee" dur="3s" repeatCount="indefinite" />
-                      </stop>
-                      <stop offset="50%" stopColor="#faaf3f" stopOpacity="0.9">
-                        <animate attributeName="stop-color" values="#faaf3f;#00adee;#faaf3f" dur="3s" repeatCount="indefinite" />
-                      </stop>
-                      <stop offset="100%" stopColor="#00adee" stopOpacity="0.8">
-                        <animate attributeName="stop-color" values="#00adee;#faaf3f;#00adee" dur="3s" repeatCount="indefinite" />
-                      </stop>
-                    </linearGradient>
-                    
                     <filter id="glow">
-                      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
                       <feMerge>
                         <feMergeNode in="coloredBlur"/>
                         <feMergeNode in="SourceGraphic"/>
@@ -88,64 +94,8 @@ const Index = () => {
                     </filter>
                   </defs>
                   
-                  <line 
-                    x1="500" 
-                    y1="300" 
-                    x2="120" 
-                    y2="80" 
-                    stroke="url(#lineGradient1)" 
-                    strokeWidth="3.5"
-                    strokeLinecap="round"
-                    filter="url(#glow)"
-                    opacity="0"
-                  >
-                    <animate attributeName="opacity" from="0" to="1" dur="1s" fill="freeze" />
-                    <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="1.5s" fill="freeze" />
-                  </line>
-                  <line 
-                    x1="500" 
-                    y1="300" 
-                    x2="880" 
-                    y2="80" 
-                    stroke="url(#lineGradient1)" 
-                    strokeWidth="3.5"
-                    strokeLinecap="round"
-                    filter="url(#glow)"
-                    opacity="0"
-                  >
-                    <animate attributeName="opacity" from="0" to="1" dur="1s" begin="0.3s" fill="freeze" />
-                    <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="1.5s" begin="0.3s" fill="freeze" />
-                  </line>
-                  <line 
-                    x1="500" 
-                    y1="300" 
-                    x2="120" 
-                    y2="530" 
-                    stroke="url(#lineGradient1)" 
-                    strokeWidth="3.5"
-                    strokeLinecap="round"
-                    filter="url(#glow)"
-                    opacity="0"
-                  >
-                    <animate attributeName="opacity" from="0" to="1" dur="1s" begin="0.6s" fill="freeze" />
-                    <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="1.5s" begin="0.6s" fill="freeze" />
-                  </line>
-                  <line 
-                    x1="500" 
-                    y1="300" 
-                    x2="880" 
-                    y2="530" 
-                    stroke="url(#lineGradient1)" 
-                    strokeWidth="3.5"
-                    strokeLinecap="round"
-                    filter="url(#glow)"
-                    opacity="0"
-                  >
-                    <animate attributeName="opacity" from="0" to="1" dur="1s" begin="0.9s" fill="freeze" />
-                    <animate attributeName="stroke-dasharray" from="0,1000" to="1000,0" dur="1.5s" begin="0.9s" fill="freeze" />
-                  </line>
-                  
-                  <g transform="translate(300, 180)">
+                  {/* Арнольд в центре */}
+                  <g transform="translate(300, 240)">
                     <svg width="400" height="200" viewBox="0 0 974.28 376.03" preserveAspectRatio="xMidYMid meet">
                       <defs>
                         <style>
@@ -169,67 +119,157 @@ const Index = () => {
                     </svg>
                   </g>
                   
-                  {services.map((service) => (
-                    <g key={service.id}>
-                      <circle
-                        cx={service.x}
-                        cy={service.y}
-                        r="70"
-                        fill="#f3f4f6"
-                        className="dark:fill-[#374151] cursor-pointer transition-all duration-500 hover:fill-[#e5e7eb] dark:hover:fill-[#4b5563]"
-                        stroke="url(#lineGradient1)"
-                        strokeWidth="3"
-                        filter="url(#glow)"
-                        opacity="0"
-                      >
-                        <animate attributeName="opacity" from="0" to="1" dur="0.6s" begin="1.2s" fill="freeze" />
-                        <animate attributeName="r" from="0" to="70" dur="0.6s" begin="1.2s" fill="freeze" />
-                      </circle>
-                      <circle
-                        cx={service.x}
-                        cy={service.y}
-                        r="28"
-                        fill="#e5e7eb"
-                        className="dark:fill-[#4b5563] transition-all duration-300"
-                        stroke="#00adee"
-                        strokeWidth="2"
-                        opacity="0"
-                      >
-                        <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.5s" fill="freeze" />
-                        <animate attributeName="r" from="0" to="28" dur="0.4s" begin="1.5s" fill="freeze" />
-                      </circle>
-                      <foreignObject 
-                        x={service.x - 14} 
-                        y={service.y - 14} 
-                        width="28" 
-                        height="28"
-                        opacity="0"
-                      >
-                        <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.6s" fill="freeze" />
-                        <div className="w-full h-full flex items-center justify-center">
-                          <Icon name={service.icon} size={20} className="text-gray-900 dark:text-white" />
-                        </div>
-                      </foreignObject>
-                      
-                      <text
-                        x={service.x}
-                        y={service.y + 95}
-                        textAnchor="middle"
-                        fontSize="16"
-                        fontWeight="600"
-                        className="fill-gray-900 dark:fill-white"
-                        style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}
-                        opacity="0"
-                      >
-                        <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.8s" fill="freeze" />
-                        {service.title}
-                      </text>
-                    </g>
-                  ))}
+                  {/* Узлы сервисов */}
+                  {services.map((service, idx) => {
+                    const angleRad = (service.angle * Math.PI) / 180;
+                    const x = centerX + radius * Math.cos(angleRad);
+                    const y = centerY + radius * Math.sin(angleRad);
+                    
+                    const isIdle = !focusedNode && !selectedNode;
+                    const isFocused = focusedNode === service.id;
+                    const isActive = activeNode === service.id;
+                    const isSelected = selectedNode === service.id;
+                    const isDimmed = selectedNode && selectedNode !== service.id;
+                    
+                    const breathingDelay = idx * 1.2;
+                    const scanDelay = idx * 2.5;
+                    
+                    return (
+                      <g key={service.id}>
+                        {/* Линия-связь (S1, S2, S3) */}
+                        {(isFocused || isActive || isSelected) && (
+                          <line
+                            x1={centerX}
+                            y1={centerY}
+                            x2={x}
+                            y2={y}
+                            stroke={isActive ? '#00adee' : '#9ca3af'}
+                            strokeWidth={isActive ? '2.5' : '1.5'}
+                            strokeDasharray="4,4"
+                            className="transition-all duration-300"
+                            opacity={isDimmed ? 0.3 : 0.6}
+                          />
+                        )}
+                        
+                        {/* Основной круг */}
+                        <g
+                          style={{
+                            transform: isActive ? `translate(${(centerX - x) * 0.03}px, ${(centerY - y) * 0.03}px)` : 'none',
+                            transition: 'transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+                            cursor: 'pointer'
+                          }}
+                          onMouseEnter={() => setFocusedNode(service.id)}
+                          onMouseLeave={() => setFocusedNode(null)}
+                          onClick={() => handleNodeClick(service.id)}
+                        >
+                          {/* Scan штрих (S0) */}
+                          {isIdle && (
+                            <circle
+                              cx={x}
+                              cy={y}
+                              r="68"
+                              fill="none"
+                              stroke="#00adee"
+                              strokeWidth="2"
+                              strokeDasharray="60 340"
+                              opacity="0"
+                              style={{
+                                animation: `scan 10s ease-in-out ${scanDelay}s infinite`
+                              }}
+                            />
+                          )}
+                          
+                          {/* Внешний круг */}
+                          <circle
+                            cx={x}
+                            cy={y}
+                            r="65"
+                            fill={isDimmed ? '#f9fafb' : '#f3f4f6'}
+                            className={`dark:fill-${isDimmed ? '[#1f2937]' : '[#374151]'} transition-all duration-500`}
+                            stroke={isFocused || isActive || isSelected ? '#00adee' : '#d1d5db'}
+                            strokeWidth={isActive ? '3' : '2'}
+                            opacity={isDimmed ? 0.4 : 1}
+                            style={{
+                              animation: isIdle ? `breathe 5s ease-in-out ${breathingDelay}s infinite` : 'none'
+                            }}
+                          />
+                          
+                          {/* Прогресс-кольцо (S2) */}
+                          {isActive && (
+                            <circle
+                              cx={x}
+                              cy={y}
+                              r="65"
+                              fill="none"
+                              stroke="#00adee"
+                              strokeWidth="3"
+                              strokeDasharray="280 120"
+                              strokeDashoffset="0"
+                              opacity="0.8"
+                              style={{
+                                animation: 'progress 1.5s ease-out forwards'
+                              }}
+                            />
+                          )}
+                          
+                          {/* Внутренний круг с иконкой */}
+                          <circle
+                            cx={x}
+                            cy={y}
+                            r="28"
+                            fill={isFocused || isSelected ? '#e0f2fe' : '#e5e7eb'}
+                            className="dark:fill-[#1e3a8a] transition-all duration-300"
+                          />
+                          
+                          <foreignObject
+                            x={x - 14}
+                            y={y - 14}
+                            width="28"
+                            height="28"
+                          >
+                            <div xmlns="http://www.w3.org/1999/xhtml" className="w-full h-full flex items-center justify-center">
+                              <Icon 
+                                name={service.icon} 
+                                size={20} 
+                                className={`${isFocused || isSelected ? 'text-blue-600' : 'text-gray-900'} dark:text-white transition-colors duration-300`}
+                              />
+                            </div>
+                          </foreignObject>
+                          
+                          {/* Название */}
+                          <text
+                            x={x}
+                            y={y + 88}
+                            textAnchor="middle"
+                            fontSize="15"
+                            fontWeight="600"
+                            className={`fill-gray-900 dark:fill-white transition-all duration-300`}
+                            style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}
+                            opacity={isDimmed ? 0.4 : isFocused ? 1 : 0.8}
+                          >
+                            {service.title}
+                          </text>
+                          
+                          {/* Подзаголовок */}
+                          <text
+                            x={x}
+                            y={y + 104}
+                            textAnchor="middle"
+                            fontSize="12"
+                            className="fill-gray-500 dark:fill-gray-400 transition-all duration-300"
+                            style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}
+                            opacity={isDimmed ? 0.3 : isFocused ? 0.9 : 0.6}
+                          >
+                            {service.subtitle}
+                          </text>
+                        </g>
+                      </g>
+                    );
+                  })}
                 </svg>
               </div>
 
-              <div className="text-center mt-8 animate-fade-in" style={{ animationDelay: '400ms' }}>
+              <div className="text-center mt-8">
                 <div className="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 dark:bg-gray-800 rounded-full text-sm font-medium text-gray-900 dark:text-white">
                   <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                   Resource Center
@@ -240,54 +280,41 @@ const Index = () => {
               </div>
             </div>
           </section>
-
-          <section className="py-20 bg-gray-50 dark:bg-gray-900">
-            <div className="container mx-auto px-4">
-              <div className="max-w-5xl mx-auto">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center text-gray-900 dark:text-white">
-                  Один интерфейс для B2C и B2B
-                </h2>
-                <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 mb-16 text-center leading-relaxed max-w-3xl mx-auto">
-                  Мы создаём инфраструктуру для доступа к глобальным финансовым сервисам. Спокойный, технический, экспертный подход к цифровой мобильности.
-                </p>
-                
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                  <div className="text-center group">
-                    <div className="w-24 h-24 md:w-28 md:h-28 rounded-full border-[3px] border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                      <Icon name="Shield" size={36} className="text-gray-900 dark:text-white" />
-                    </div>
-                    <h3 className="font-bold text-lg mb-2 text-gray-900 dark:text-white">Бесплатный VPN</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Операционная безопасность и чистые IP</p>
-                  </div>
-                  
-                  <div className="text-center group">
-                    <div className="w-24 h-24 md:w-28 md:h-28 rounded-full border-[3px] border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                      <Icon name="UserCheck" size={36} className="text-gray-900 dark:text-white" />
-                    </div>
-                    <h3 className="font-bold text-lg mb-2 text-gray-900 dark:text-white">Верификация KYC</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Быстрый старт без барьеров</p>
-                  </div>
-                  
-                  <div className="text-center group">
-                    <div className="w-24 h-24 md:w-28 md:h-28 rounded-full border-[3px] border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                      <Icon name="Radio" size={36} className="text-gray-900 dark:text-white" />
-                    </div>
-                    <h3 className="font-bold text-lg mb-2 text-gray-900 dark:text-white">Мировые eSIM</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Зарубежные номера и мобильность</p>
-                  </div>
-                  
-                  <div className="text-center group">
-                    <div className="w-24 h-24 md:w-28 md:h-28 rounded-full border-[3px] border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                      <Icon name="Lightbulb" size={36} className="text-gray-900 dark:text-white" />
-                    </div>
-                    <h3 className="font-bold text-lg mb-2 text-gray-900 dark:text-white">IT для бизнеса</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">B2B инфраструктура и масштабирование</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
         </main>
+
+        {/* Карточка сервиса (S2, S3) */}
+        <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
+          <SheetContent>
+            {selectedNode && services.find(s => s.id === selectedNode) && (
+              <>
+                <SheetHeader>
+                  <SheetTitle className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
+                      <Icon 
+                        name={services.find(s => s.id === selectedNode)!.icon} 
+                        size={24} 
+                        className="text-blue-600 dark:text-blue-300"
+                      />
+                    </div>
+                    {services.find(s => s.id === selectedNode)!.title}
+                  </SheetTitle>
+                  <SheetDescription>
+                    {services.find(s => s.id === selectedNode)!.description}
+                  </SheetDescription>
+                </SheetHeader>
+                
+                <div className="mt-6 space-y-4">
+                  <Button className="w-full" size="lg">
+                    Узнать больше
+                  </Button>
+                  <Button className="w-full" variant="outline" size="lg">
+                    Связаться с нами
+                  </Button>
+                </div>
+              </>
+            )}
+          </SheetContent>
+        </Sheet>
 
         <footer className="py-12 border-t border-gray-200 dark:border-gray-800">
           <div className="container mx-auto px-4">
@@ -313,6 +340,25 @@ const Index = () => {
           </div>
         </footer>
       </div>
+      
+      <style>{`
+        @keyframes breathe {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.015); }
+        }
+        
+        @keyframes scan {
+          0% { opacity: 0; stroke-dashoffset: 400; }
+          10% { opacity: 0.6; }
+          30% { opacity: 0; stroke-dashoffset: 0; }
+          100% { opacity: 0; }
+        }
+        
+        @keyframes progress {
+          0% { stroke-dasharray: 0 400; }
+          100% { stroke-dasharray: 280 120; }
+        }
+      `}</style>
     </div>
   );
 };
