@@ -31,18 +31,21 @@ const Index = () => {
   ];
 
   const services = [
-    { id: 'revolut', name: 'Revolut', type: 'Финтех', category: 'kyc-fintech', icon: 'CreditCard', description: 'Мультивалютный банк', cta: 'Подключить' },
-    { id: 'wise', name: 'Wise', type: 'Финтех', category: 'kyc-fintech', icon: 'DollarSign', description: 'Международные переводы', cta: 'Подключить' },
-    { id: 'payoneer', name: 'Payoneer', type: 'Платёжная система', category: 'kyc-fintech', icon: 'Wallet', description: 'Платежи для бизнеса', cta: 'Подключить' },
-    { id: 'monzo', name: 'Monzo', type: 'Банк', category: 'kyc-fintech', icon: 'Building2', description: 'Британский цифровой банк', cta: 'Открыть' },
-    { id: 'n26', name: 'N26', type: 'Банк', category: 'kyc-fintech', icon: 'Building', description: 'Европейский мобильный банк', cta: 'Открыть' },
-    { id: 'binance', name: 'Binance', type: 'Криптобиржа', category: 'kyc-crypto', icon: 'Bitcoin', description: 'Крупнейшая криптобиржа', cta: 'Подключить' },
-    { id: 'coinbase', name: 'Coinbase', type: 'Криптобиржа', category: 'kyc-crypto', icon: 'Coins', description: 'Биржа криптовалют', cta: 'Подключить' },
-    { id: 'kraken', name: 'Kraken', type: 'Криптобиржа', category: 'kyc-crypto', icon: 'TrendingUp', description: 'Торговля криптовалютой', cta: 'Подключить' },
-    { id: 'stripe', name: 'Stripe', type: 'Платформа', category: 'kyc-platforms', icon: 'Zap', description: 'Платёжная инфраструктура', cta: 'Интегрировать' },
-    { id: 'paypal', name: 'PayPal', type: 'Платформа', category: 'kyc-platforms', icon: 'ShoppingBag', description: 'Онлайн платежи', cta: 'Подключить' },
-    { id: 'adyen', name: 'Adyen', type: 'Платформа', category: 'kyc-platforms', icon: 'Globe2', description: 'Глобальные платежи', cta: 'Интегрировать' },
-    { id: 'square', name: 'Square', type: 'Платформа', category: 'kyc-platforms', icon: 'Store', description: 'Платежи для торговли', cta: 'Подключить' }
+    { id: 'wise', name: 'Wise', type: 'Финтех', category: 'kyc-fintech', icon: 'CreditCard', description: 'Мультивалютный банк с IBAN', price: '120 USDT', cta: 'Подключить' },
+    { id: 'revolut', name: 'Revolut', type: 'Финтех', category: 'kyc-fintech', icon: 'Wallet', description: 'Швейцарский нож финансов', price: '350 USDT', cta: 'Подключить' },
+    { id: 'payoneer', name: 'Payoneer', type: 'Финтех', category: 'kyc-fintech', icon: 'Briefcase', description: 'Платежи для фрилансеров', price: '100 USDT', cta: 'Подключить' },
+    { id: 'grey', name: 'Grey', type: 'Финтех', category: 'kyc-fintech', icon: 'Building2', description: 'Аналог Wise с USD-картой', price: '120 USDT', cta: 'Подключить' },
+    { id: 'neteller', name: 'Neteller', type: 'Финтех', category: 'kyc-fintech', icon: 'DollarSign', description: 'Электронный кошелёк', price: '120 USDT', cta: 'Подключить' },
+    { id: 'skrill', name: 'Skrill', type: 'Финтех', category: 'kyc-fintech', icon: 'Wallet2', description: 'Платёжная система', price: '120 USDT', cta: 'Подключить' },
+    { id: 'bybit', name: 'Bybit', type: 'Криптобиржа', category: 'kyc-crypto', icon: 'Bitcoin', description: 'Виртуальная карта с V2', price: '45 USDT', cta: 'Подключить' },
+    { id: 'bitget', name: 'Bitget', type: 'Криптобиржа', category: 'kyc-crypto', icon: 'Coins', description: 'Биржа с IBAN FR/DE', price: '120 USDT', cta: 'Подключить' },
+    { id: 'kraken', name: 'Kraken', type: 'Криптобиржа', category: 'kyc-crypto', icon: 'TrendingUp', description: 'Торговля криптовалютой', price: '100 USDT', cta: 'Подключить' },
+    { id: 'redotpay', name: 'RedotPay', type: 'Крипто-карта', category: 'kyc-crypto', icon: 'CreditCard', description: 'Крипто → фиат карта', price: '40 USDT', cta: 'Подключить' },
+    { id: 'etherfi', name: 'Ether.fi', type: 'Крипто-карта', category: 'kyc-crypto', icon: 'Sparkles', description: 'Стейкинг + карта в Apple Pay', price: '100 USDT', cta: 'Подключить' },
+    { id: 'tuyo', name: 'TUYO', type: 'Крипто-карта', category: 'kyc-crypto', icon: 'Zap', description: 'Шлюз фиат ⇄ крипта без комиссий', price: '150 USDT', cta: 'Подключить' },
+    { id: 'paypal', name: 'PayPal', type: 'Платформа', category: 'kyc-platforms', icon: 'ShoppingBag', description: 'Онлайн платежи + Perplexity Pro', price: '120 USDT', cta: 'Подключить' },
+    { id: 'spenda', name: 'Spenda', type: 'Платформа', category: 'kyc-platforms', icon: 'CreditCard', description: 'USD/NGN карта для подписок', price: '90 USDT', cta: 'Подключить' },
+    { id: 'hexacard', name: 'HexaCard', type: 'Платформа', category: 'kyc-platforms', icon: 'Sparkle', description: 'Турецкие цены на подписки', price: '150 USDT', cta: 'Подключить' }
   ];
 
   const menuItems = [
@@ -223,13 +226,18 @@ const Index = () => {
               {service.type}
             </p>
             
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
+            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 min-h-[40px] line-clamp-2">
               {service.description}
             </p>
             
-            <div className="flex items-center text-sm font-medium text-blue-600 dark:text-blue-400">
-              {service.cta}
-              <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
+            <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-700">
+              <span className="text-base font-bold text-gray-900 dark:text-white">
+                {service.price}
+              </span>
+              <div className="flex items-center text-sm font-medium text-blue-600 dark:text-blue-400">
+                {service.cta}
+                <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
+              </div>
             </div>
           </button>
         ))}
