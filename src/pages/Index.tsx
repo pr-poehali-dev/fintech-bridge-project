@@ -227,8 +227,8 @@ const Index = () => {
             key={service.id}
             onClick={() => setSelectedService(service.id)}
             className={`
-              group relative rounded-xl p-5 
-              border-2 transition-all duration-200 text-left overflow-hidden
+              group relative rounded-xl overflow-hidden
+              border-2 transition-all duration-200 text-left
               hover:shadow-lg hover:-translate-y-0.5
               ${selectedService === service.id 
                 ? 'border-blue-500 shadow-lg' 
@@ -238,19 +238,22 @@ const Index = () => {
           >
             {service.backgroundImage && (
               <div 
-                className="absolute inset-0 opacity-20 dark:opacity-10"
+                className="absolute inset-0"
                 style={{
                   backgroundImage: `url(${service.backgroundImage})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
                 }}
-              />
+              >
+                <div className="absolute inset-0 bg-white/85 dark:bg-gray-800/85 backdrop-blur-[2px]" />
+              </div>
             )}
             
-            <div className="relative z-10 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg p-5 -m-5">
+            <div className={`relative z-10 p-5 ${!service.backgroundImage ? 'bg-white dark:bg-gray-800' : ''}`}>
               <div className="flex items-start justify-between mb-3">
                 {service.logoSvg ? (
-                  <div className="w-11 h-11 flex items-center justify-center">
+                  <div className="w-14 h-14 rounded-lg bg-white dark:bg-gray-900 shadow-sm border border-gray-100 dark:border-gray-700 p-2 flex items-center justify-center">
                     <img src={service.logoSvg} alt={service.name} className="w-full h-full object-contain" />
                   </div>
                 ) : (

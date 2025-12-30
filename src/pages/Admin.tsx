@@ -23,7 +23,7 @@ const Admin = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [darkMode, setDarkMode] = useState(false);
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'products' | 'settings'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'products' | 'settings'>('products');
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -231,16 +231,6 @@ const Admin = () => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex gap-1 border-t border-gray-200 dark:border-gray-700">
             <button
-              onClick={() => setActiveTab('dashboard')}
-              className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
-                activeTab === 'dashboard'
-                  ? 'border-blue-500 text-blue-600 dark:text-blue-400'
-                  : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-              }`}
-            >
-              Дашборд
-            </button>
-            <button
               onClick={() => setActiveTab('products')}
               className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === 'products'
@@ -265,102 +255,6 @@ const Admin = () => {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
-        {activeTab === 'dashboard' && (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
-                    <Icon name="Users" size={20} className="text-blue-600 dark:text-blue-400" />
-                  </div>
-                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                    Пользователи
-                  </h2>
-                </div>
-                <p className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                  247
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  +12 за последние 24 часа
-                </p>
-              </div>
-
-              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-green-50 dark:bg-green-900/20 flex items-center justify-center">
-                    <Icon name="ShoppingCart" size={20} className="text-green-600 dark:text-green-400" />
-                  </div>
-                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                    Заказы
-                  </h2>
-                </div>
-                <p className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                  156
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  8 активных заказов
-                </p>
-              </div>
-
-              <div className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center">
-                    <Icon name="DollarSign" size={20} className="text-purple-600 dark:text-purple-400" />
-                  </div>
-                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                    Выручка
-                  </h2>
-                </div>
-                <p className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                  18,240 USDT
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  За текущий месяц
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-8 bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-                Последние заказы
-              </h2>
-              <div className="space-y-3">
-                {[
-                  { id: '1', service: 'Wise', price: '120 USDT', status: 'completed', time: '2 часа назад' },
-                  { id: '2', service: 'Revolut', price: '350 USDT', status: 'pending', time: '4 часа назад' },
-                  { id: '3', service: 'PayPal', price: '120 USDT', status: 'completed', time: '6 часов назад' },
-                  { id: '4', service: 'Ether.fi', price: '100 USDT', status: 'completed', time: '1 день назад' },
-                ].map((order) => (
-                  <div key={order.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-                    <div className="flex items-center gap-4">
-                      <div className="flex flex-col">
-                        <span className="font-semibold text-gray-900 dark:text-white">
-                          {order.service}
-                        </span>
-                        <span className="text-sm text-gray-600 dark:text-gray-400">
-                          {order.time}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <span className="font-bold text-gray-900 dark:text-white">
-                        {order.price}
-                      </span>
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        order.status === 'completed' 
-                          ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' 
-                          : 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400'
-                      }`}>
-                        {order.status === 'completed' ? 'Выполнен' : 'В обработке'}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </>
-        )}
-
         {activeTab === 'products' && (
           <div>
             <div className="flex items-center justify-between mb-6">
