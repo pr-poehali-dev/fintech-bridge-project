@@ -251,7 +251,7 @@ const Index = () => {
                       key={item.id}
                       onClick={() => setActiveSection(item.id)}
                       className={`
-                        w-full flex items-center gap-3 px-4 py-2 rounded-lg ml-4
+                        w-full flex items-center px-4 py-2 rounded-lg ml-4
                         transition-all duration-200
                         ${activeSection === item.id
                           ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
@@ -259,8 +259,10 @@ const Index = () => {
                         }
                       `}
                     >
-                      <Icon name={item.icon} size={16} />
-                      <span className="text-sm font-medium">{item.title}</span>
+                      <div className="w-10 flex-shrink-0 flex items-center justify-center">
+                        <Icon name={item.icon} size={16} />
+                      </div>
+                      <span className="text-sm font-medium flex-1">{item.title}</span>
                     </button>
                   );
                 }
@@ -281,31 +283,35 @@ const Index = () => {
                         }
                       `}
                     >
-                      <Icon name={item.icon} size={20} className="flex-shrink-0" />
-                      <span className="font-medium whitespace-nowrap overflow-hidden text-ellipsis ml-3 flex-1 min-w-0">{item.title}</span>
-                      {item.badge && (
-                        <span className="px-2 py-0.5 text-xs font-medium bg-blue-500 text-white rounded flex-shrink-0 ml-2">
-                          {item.badge}
-                        </span>
-                      )}
-                      {item.hasSubmenu && (
-                        <Icon 
-                          name="ChevronDown" 
-                          size={16}
-                          className={`transition-transform flex-shrink-0 ml-auto ${expandedSections.includes(item.id) ? 'rotate-180' : ''}`}
-                        />
-                      )}
+                      <div className="w-10 flex-shrink-0 flex items-center justify-center">
+                        <Icon name={item.icon} size={20} />
+                      </div>
+                      <span className="font-medium whitespace-nowrap overflow-hidden text-ellipsis flex-1 min-w-0">{item.title}</span>
+                      <div className="flex items-center gap-2 ml-auto flex-shrink-0">
+                        {item.badge && (
+                          <span className="px-2 py-0.5 text-xs font-medium bg-blue-500 text-white rounded">
+                            {item.badge}
+                          </span>
+                        )}
+                        {item.hasSubmenu && (
+                          <Icon 
+                            name="ChevronDown" 
+                            size={16}
+                            className={`transition-transform ${expandedSections.includes(item.id) ? 'rotate-180' : ''}`}
+                          />
+                        )}
+                      </div>
                     </button>
 
                     {/* Подменю */}
                     {item.hasSubmenu && expandedSections.includes(item.id) && (
-                      <div className="ml-4 mt-1 space-y-1">
+                      <div className="mt-1 space-y-1">
                         {item.submenu?.map((subitem) => (
                           <button
                             key={subitem.id}
                             onClick={() => setActiveSection(subitem.id)}
                             className={`
-                              w-full flex items-center gap-3 px-4 py-2 rounded-lg
+                              w-full flex items-center px-4 py-2 rounded-lg
                               transition-all duration-200
                               ${activeSection === subitem.id
                                 ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
@@ -313,8 +319,10 @@ const Index = () => {
                               }
                             `}
                           >
-                            <Icon name={subitem.icon} size={16} />
-                            <span className="text-sm">{subitem.title}</span>
+                            <div className="w-10 flex-shrink-0 flex items-center justify-center">
+                              <Icon name={subitem.icon} size={16} />
+                            </div>
+                            <span className="text-sm flex-1">{subitem.title}</span>
                           </button>
                         ))}
                       </div>
