@@ -251,7 +251,7 @@ const Index = () => {
                       key={item.id}
                       onClick={() => setActiveSection(item.id)}
                       className={`
-                        w-full flex items-center pl-10 pr-3 py-2 rounded-md mb-1
+                        w-full flex items-center pl-11 pr-3 py-2 rounded-md mb-1
                         transition-colors duration-150
                         ${activeSection === item.id
                           ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
@@ -259,8 +259,8 @@ const Index = () => {
                         }
                       `}
                     >
-                      <Icon name={item.icon} size={18} className="absolute left-10 flex-shrink-0" />
-                      <span className="text-sm font-medium whitespace-nowrap ml-7">{item.title}</span>
+                      <Icon name={item.icon} size={18} className="mr-3 flex-shrink-0" />
+                      <span className="text-sm font-medium">{item.title}</span>
                     </button>
                   );
                 }
@@ -273,7 +273,7 @@ const Index = () => {
                         if (item.hasSubmenu) toggleSection(item.id);
                       }}
                       className={`
-                        w-full flex items-center px-3 py-2 rounded-md relative
+                        w-full flex items-center px-3 py-2 rounded-md
                         transition-colors duration-150
                         ${activeSection === item.id
                           ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
@@ -281,24 +281,22 @@ const Index = () => {
                         }
                       `}
                     >
-                      <Icon name={item.icon} size={20} className="absolute left-3 flex-shrink-0" />
-                      <span className="font-medium whitespace-nowrap flex-1 ml-8">{item.title}</span>
-                      {(item.badge || item.hasSubmenu) && (
-                        <div className="flex items-center gap-1.5 flex-shrink-0">
-                          {item.badge && (
-                            <span className="px-1.5 py-0.5 text-xs font-semibold bg-blue-500 text-white rounded">
-                              {item.badge}
-                            </span>
-                          )}
-                          {item.hasSubmenu && (
-                            <Icon 
-                              name="ChevronDown" 
-                              size={16}
-                              className={`transition-transform duration-200 ${expandedSections.includes(item.id) ? 'rotate-180' : ''}`}
-                            />
-                          )}
-                        </div>
-                      )}
+                      <Icon name={item.icon} size={20} className="mr-3 flex-shrink-0" />
+                      <span className="font-medium flex-1">{item.title}</span>
+                      <div className="flex items-center gap-1.5 flex-shrink-0">
+                        {item.badge && (
+                          <span className="px-1.5 py-0.5 text-xs font-semibold bg-blue-500 text-white rounded">
+                            {item.badge}
+                          </span>
+                        )}
+                        {item.hasSubmenu && (
+                          <Icon 
+                            name="ChevronDown" 
+                            size={16}
+                            className={`transition-transform duration-200 ${expandedSections.includes(item.id) ? 'rotate-180' : ''}`}
+                          />
+                        )}
+                      </div>
                     </button>
 
                     {/* Подменю */}
@@ -309,7 +307,7 @@ const Index = () => {
                             key={subitem.id}
                             onClick={() => setActiveSection(subitem.id)}
                             className={`
-                              w-full flex items-center pl-10 pr-3 py-2 rounded-md mb-1 relative
+                              w-full flex items-center pl-11 pr-3 py-2 rounded-md mb-1
                               transition-colors duration-150
                               ${activeSection === subitem.id
                                 ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
@@ -317,8 +315,8 @@ const Index = () => {
                               }
                             `}
                           >
-                            <Icon name={subitem.icon} size={18} className="absolute left-10 flex-shrink-0" />
-                            <span className="text-sm whitespace-nowrap ml-7">{subitem.title}</span>
+                            <Icon name={subitem.icon} size={18} className="mr-3 flex-shrink-0" />
+                            <span className="text-sm">{subitem.title}</span>
                           </button>
                         ))}
                       </div>
