@@ -287,20 +287,22 @@ const Index = () => {
                         <Icon name={item.icon} size={20} />
                       </div>
                       <span className="font-medium ml-2.5 whitespace-nowrap flex-1">{item.title}</span>
-                      <div className="flex items-center gap-1.5 flex-shrink-0">
-                        {item.badge && (
-                          <span className="px-1.5 py-0.5 text-xs font-semibold bg-blue-500 text-white rounded">
-                            {item.badge}
-                          </span>
-                        )}
-                        {item.hasSubmenu && (
-                          <Icon 
-                            name="ChevronDown" 
-                            size={16}
-                            className={`transition-transform duration-200 ${expandedSections.includes(item.id) ? 'rotate-180' : ''}`}
-                          />
-                        )}
-                      </div>
+                      {(item.badge || item.hasSubmenu) && (
+                        <div className="flex items-center gap-1.5 flex-shrink-0">
+                          {item.badge && (
+                            <span className="px-1.5 py-0.5 text-xs font-semibold bg-blue-500 text-white rounded">
+                              {item.badge}
+                            </span>
+                          )}
+                          {item.hasSubmenu && (
+                            <Icon 
+                              name="ChevronDown" 
+                              size={16}
+                              className={`transition-transform duration-200 ${expandedSections.includes(item.id) ? 'rotate-180' : ''}`}
+                            />
+                          )}
+                        </div>
+                      )}
                     </button>
 
                     {/* Подменю */}
