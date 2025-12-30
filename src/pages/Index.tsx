@@ -259,7 +259,7 @@ const Index = () => {
                         }
                       `}
                     >
-                      <div className="w-6 flex items-center justify-start flex-shrink-0">
+                      <div className="w-6 flex items-center justify-center flex-shrink-0">
                         <Icon name={item.icon} size={18} />
                       </div>
                       <span className="text-sm font-medium ml-2 whitespace-nowrap">{item.title}</span>
@@ -283,7 +283,7 @@ const Index = () => {
                         }
                       `}
                     >
-                      <div className="w-6 flex items-center justify-start flex-shrink-0">
+                      <div className="w-6 flex items-center justify-center flex-shrink-0">
                         <Icon name={item.icon} size={20} />
                       </div>
                       <span className="font-medium flex-1 ml-2 whitespace-nowrap">{item.title}</span>
@@ -319,7 +319,7 @@ const Index = () => {
                               }
                             `}
                           >
-                            <div className="w-6 flex items-center justify-start flex-shrink-0">
+                            <div className="w-6 flex items-center justify-center flex-shrink-0">
                               <Icon name={subitem.icon} size={18} />
                             </div>
                             <span className="text-sm ml-2 whitespace-nowrap">{subitem.title}</span>
