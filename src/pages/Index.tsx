@@ -5,7 +5,7 @@ import Icon from '@/components/ui/icon';
 const Index = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [activeSection, setActiveSection] = useState('kyc');
-  const [expandedSections, setExpandedSections] = useState<string[]>([]);
+  const [expandedSections, setExpandedSections] = useState<string[]>(['kyc']);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -242,7 +242,7 @@ const Index = () => {
 
         <div className="flex pt-[73px]">
           {/* Левая навигация */}
-          <aside className="fixed left-0 top-[73px] bottom-0 w-64 bg-white dark:bg-[#1a1a1a] border-r border-gray-200 dark:border-gray-800 overflow-y-auto">
+          <aside className="fixed left-0 top-[73px] bottom-0 w-72 bg-white dark:bg-[#1a1a1a] border-r border-gray-200 dark:border-gray-800 overflow-y-auto">
             <nav className="p-4 space-y-1">
               {menuItems.map((item) => {
                 if (item.isSubitem) {
@@ -273,7 +273,7 @@ const Index = () => {
                         if (item.hasSubmenu) toggleSection(item.id);
                       }}
                       className={`
-                        w-full flex items-center justify-between px-4 py-3 rounded-lg
+                        w-full flex items-center px-4 py-3 rounded-lg
                         transition-all duration-200
                         ${activeSection === item.id
                           ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
@@ -281,20 +281,18 @@ const Index = () => {
                         }
                       `}
                     >
-                      <div className="flex items-center gap-3">
-                        <Icon name={item.icon} size={20} />
-                        <span className="font-medium">{item.title}</span>
-                        {item.badge && (
-                          <span className="px-2 py-0.5 text-xs font-medium bg-blue-500 text-white rounded">
-                            {item.badge}
-                          </span>
-                        )}
-                      </div>
+                      <Icon name={item.icon} size={20} className="flex-shrink-0" />
+                      <span className="font-medium whitespace-nowrap overflow-hidden text-ellipsis ml-3 flex-1 min-w-0">{item.title}</span>
+                      {item.badge && (
+                        <span className="px-2 py-0.5 text-xs font-medium bg-blue-500 text-white rounded flex-shrink-0 ml-2">
+                          {item.badge}
+                        </span>
+                      )}
                       {item.hasSubmenu && (
                         <Icon 
                           name="ChevronDown" 
                           size={16}
-                          className={`transition-transform ${expandedSections.includes(item.id) ? 'rotate-180' : ''}`}
+                          className={`transition-transform flex-shrink-0 ml-auto ${expandedSections.includes(item.id) ? 'rotate-180' : ''}`}
                         />
                       )}
                     </button>
@@ -328,7 +326,7 @@ const Index = () => {
           </aside>
 
           {/* Основной контент */}
-          <main className="ml-64 flex-1 p-8">
+          <main className="ml-72 flex-1 p-8">
             <div className="max-w-4xl mx-auto">
               <div className="mb-8">
                 <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -347,7 +345,7 @@ const Index = () => {
           </main>
         </div>
 
-        <footer className="ml-64 py-12 border-t border-gray-200 dark:border-gray-800">
+        <footer className="ml-72 py-12 border-t border-gray-200 dark:border-gray-800">
           <div className="max-w-4xl mx-auto px-8">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               <span className="font-bold text-xl text-gray-900 dark:text-white">HEY, STORE!</span>
