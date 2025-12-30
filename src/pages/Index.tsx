@@ -251,7 +251,7 @@ const Index = () => {
                       key={item.id}
                       onClick={() => setActiveSection(item.id)}
                       className={`
-                        w-full flex items-center pl-11 pr-3 py-2 rounded-md mb-1
+                        w-full flex items-center px-3 py-2 rounded-md mb-1
                         transition-colors duration-150
                         ${activeSection === item.id
                           ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
@@ -259,8 +259,10 @@ const Index = () => {
                         }
                       `}
                     >
-                      <Icon name={item.icon} size={18} className="mr-3 flex-shrink-0" />
-                      <span className="text-sm font-medium">{item.title}</span>
+                      <div className="w-8 flex items-center justify-start flex-shrink-0">
+                        <Icon name={item.icon} size={18} />
+                      </div>
+                      <span className="text-sm font-medium ml-2">{item.title}</span>
                     </button>
                   );
                 }
@@ -281,8 +283,10 @@ const Index = () => {
                         }
                       `}
                     >
-                      <Icon name={item.icon} size={20} className="mr-3 flex-shrink-0" />
-                      <span className="font-medium flex-1">{item.title}</span>
+                      <div className="w-8 flex items-center justify-start flex-shrink-0">
+                        <Icon name={item.icon} size={20} />
+                      </div>
+                      <span className="font-medium flex-1 ml-2">{item.title}</span>
                       <div className="flex items-center gap-1.5 flex-shrink-0">
                         {item.badge && (
                           <span className="px-1.5 py-0.5 text-xs font-semibold bg-blue-500 text-white rounded">
@@ -307,7 +311,7 @@ const Index = () => {
                             key={subitem.id}
                             onClick={() => setActiveSection(subitem.id)}
                             className={`
-                              w-full flex items-center pl-11 pr-3 py-2 rounded-md mb-1
+                              w-full flex items-center pl-10 pr-3 py-2 rounded-md mb-1
                               transition-colors duration-150
                               ${activeSection === subitem.id
                                 ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
@@ -315,8 +319,10 @@ const Index = () => {
                               }
                             `}
                           >
-                            <Icon name={subitem.icon} size={18} className="mr-3 flex-shrink-0" />
-                            <span className="text-sm">{subitem.title}</span>
+                            <div className="w-8 flex items-center justify-start flex-shrink-0">
+                              <Icon name={subitem.icon} size={18} />
+                            </div>
+                            <span className="text-sm ml-2">{subitem.title}</span>
                           </button>
                         ))}
                       </div>
