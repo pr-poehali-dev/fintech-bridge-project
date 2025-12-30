@@ -41,21 +41,24 @@ const ServiceCard = ({ service, isSelected, onClick }: ServiceCardProps) => {
       <div className="absolute inset-0 bg-white dark:bg-gray-800" />
       
       {service.backgroundImage && (
-        <div 
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `url(${service.backgroundImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-          }}
-        />
+        <>
+          <div 
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url(${service.backgroundImage})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+            }}
+          />
+          <div className="absolute inset-0 bg-white/15" />
+        </>
       )}
       
       <div className="relative z-10 p-5 flex flex-col h-full">
         <div className="flex items-start justify-between mb-3">
           {service.logoSvg ? (
-            <div className="w-14 h-14 p-2 flex items-center justify-center border-2 border-black dark:border-white rounded-lg">
+            <div className="w-14 h-14 p-2 flex items-center justify-center border-2 border-[#0F172A] rounded-lg">
               <img src={service.logoSvg} alt={service.name} className="w-full h-full object-contain" />
             </div>
           ) : (
@@ -65,15 +68,15 @@ const ServiceCard = ({ service, isSelected, onClick }: ServiceCardProps) => {
           )}
         </div>
         
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
+        <h3 className="text-lg font-semibold text-[#0F172A] mb-1">
           {service.name}
         </h3>
         
-        <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+        <p className="text-xs text-[#334155] mb-2">
           {service.type}
         </p>
         
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 flex-1 line-clamp-2">
+        <p className="text-sm text-[#64748B] mb-3 flex-1 line-clamp-2">
           {service.description}
         </p>
         
@@ -92,12 +95,12 @@ const ServiceCard = ({ service, isSelected, onClick }: ServiceCardProps) => {
           </div>
         )}
         
-        <div className="flex items-center justify-between pt-2 mt-auto border-t border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 -mx-5 -mb-5 px-5 pb-5">
+        <div className="flex items-center justify-between pt-2 mt-auto border-t border-gray-100 bg-white -mx-5 -mb-5 px-5 pb-5">
           <div className="flex items-center justify-between w-full">
-            <span className="text-base font-bold text-gray-900 dark:text-white">
+            <span className="text-base font-bold text-[#0F172A]">
               {service.price}
             </span>
-            <div className="flex items-center text-sm font-medium text-blue-600 dark:text-blue-400">
+            <div className="flex items-center text-sm font-medium text-blue-600">
               {service.cta}
               <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
             </div>
