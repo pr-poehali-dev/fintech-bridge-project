@@ -77,22 +77,23 @@ const ServiceCard = ({ service, isSelected, onClick }: ServiceCardProps) => {
           {service.description}
         </p>
         
-        <div className="flex flex-col gap-2 pt-2 mt-auto border-t border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 -mx-5 -mb-5 px-5 pb-5">
-          {(service.acceptsVisa || service.acceptsMastercard) && (
-            <div className="flex gap-2 justify-end">
-              {service.acceptsVisa && (
-                <div className="bg-[#1A1F71] text-white px-3 py-1 rounded text-xs font-bold tracking-wider">
-                  VISA
-                </div>
-              )}
-              {service.acceptsMastercard && (
-                <div className="bg-gradient-to-r from-[#EB001B] to-[#FF5F00] text-white px-2.5 py-1 rounded text-xs font-bold tracking-wider">
-                  mastercard
-                </div>
-              )}
-            </div>
-          )}
-          <div className="flex items-center justify-between">
+        {(service.acceptsVisa || service.acceptsMastercard) && (
+          <div className="flex gap-2 justify-end mb-2">
+            {service.acceptsVisa && (
+              <div className="bg-[#1A1F71] text-white px-3 py-1 rounded text-xs font-bold tracking-wider">
+                VISA
+              </div>
+            )}
+            {service.acceptsMastercard && (
+              <div className="bg-gradient-to-r from-[#EB001B] to-[#FF5F00] text-white px-2.5 py-1 rounded text-xs font-bold tracking-wider">
+                mastercard
+              </div>
+            )}
+          </div>
+        )}
+        
+        <div className="flex items-center justify-between pt-2 mt-auto border-t border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 -mx-5 -mb-5 px-5 pb-5">
+          <div className="flex items-center justify-between w-full">
             <span className="text-base font-bold text-gray-900 dark:text-white">
               {service.price}
             </span>
