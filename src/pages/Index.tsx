@@ -168,10 +168,10 @@ const Index = () => {
                               y={y - 14} 
                               width="28" 
                               height="28"
-                              opacity="0"
+                              style={{ opacity: 0 }}
                             >
                               <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.6s" fill="freeze" />
-                              <div className="w-full h-full flex items-center justify-center">
+                              <div xmlns="http://www.w3.org/1999/xhtml" className="w-full h-full flex items-center justify-center">
                                 <Icon name={service.icon} size={20} className="text-gray-900 dark:text-white" />
                               </div>
                             </foreignObject>
