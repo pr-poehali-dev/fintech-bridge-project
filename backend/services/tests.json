@@ -1,0 +1,35 @@
+{
+  "tests": [
+    {
+      "name": "Get all services (empty)",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": [],
+      "bodyMatcher": "exact"
+    },
+    {
+      "name": "Create new service",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "id": "test-service-1",
+        "name": "Test Service",
+        "type": "Финтех",
+        "category": "kyc-fintech",
+        "icon": "CreditCard",
+        "description": "Test description",
+        "price": "100 USD",
+        "cta": "Подключить",
+        "acceptsVisa": true,
+        "acceptsMastercard": false
+      },
+      "expectedStatus": 201,
+      "expectedBody": {
+        "id": "string",
+        "message": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

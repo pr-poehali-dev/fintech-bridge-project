@@ -19,7 +19,11 @@ interface Service {
   cta: string;
   backgroundImage?: string;
   logoSvg?: string;
+  acceptsVisa?: boolean;
+  acceptsMastercard?: boolean;
 }
+
+const API_URL = 'https://functions.poehali.dev/692cf256-c3fb-49b8-9844-ae94296d195a';
 
 const defaultServices: Service[] = [
   { id: 'wise', name: 'Wise', type: 'Финтех', category: 'kyc-fintech', icon: 'CreditCard', description: 'Мультивалютный банк с IBAN', price: '120 USDT', cta: 'Подключить' },
@@ -48,28 +52,26 @@ const Index = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const loadServices = () => {
-      const stored = localStorage.getItem('heystore_services');
-      if (stored) {
-        const parsedServices = JSON.parse(stored);
-        console.log('Loaded services from localStorage:', parsedServices);
-        setServices(parsedServices);
-      } else {
-        localStorage.setItem('heystore_services', JSON.stringify(defaultServices));
+    const loadServices = async () => {
+      try {
+        const response = await fetch(API_URL);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.length === 0) {
+            setServices(defaultServices);
+          } else {
+            setServices(data);
+          }
+        } else {
+          setServices(defaultServices);
+        }
+      } catch (error) {
+        console.error('Failed to load services:', error);
         setServices(defaultServices);
       }
     };
 
     loadServices();
-
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'heystore_services') {
-        loadServices();
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
   const toggleDarkMode = () => {

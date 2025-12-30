@@ -19,7 +19,11 @@ interface Service {
   cta: string;
   backgroundImage?: string;
   logoSvg?: string;
+  acceptsVisa?: boolean;
+  acceptsMastercard?: boolean;
 }
+
+const API_URL = 'https://functions.poehali.dev/692cf256-c3fb-49b8-9844-ae94296d195a';
 
 const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -47,18 +51,39 @@ const Admin = () => {
       localStorage.setItem('admin_password', DEFAULT_PASSWORD);
     }
     loadServices();
+    migrateFromLocalStorage();
   }, []);
 
-  const loadServices = () => {
-    const stored = localStorage.getItem('heystore_services');
-    if (stored) {
-      setServices(JSON.parse(stored));
+  const loadServices = async () => {
+    try {
+      const response = await fetch(API_URL);
+      if (response.ok) {
+        const data = await response.json();
+        setServices(data);
+      }
+    } catch (error) {
+      console.error('Failed to load services:', error);
     }
   };
 
-  const saveServices = (newServices: Service[]) => {
-    localStorage.setItem('heystore_services', JSON.stringify(newServices));
-    setServices(newServices);
+  const migrateFromLocalStorage = async () => {
+    const stored = localStorage.getItem('heystore_services');
+    if (stored) {
+      const localServices = JSON.parse(stored);
+      try {
+        for (const service of localServices) {
+          await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(service)
+          });
+        }
+        localStorage.removeItem('heystore_services');
+        await loadServices();
+      } catch (error) {
+        console.error('Migration failed:', error);
+      }
+    }
   };
 
   const getStoredPassword = () => {
@@ -119,22 +144,32 @@ const Admin = () => {
     document.documentElement.classList.toggle('dark');
   };
 
-  const handleSaveService = (service: Service) => {
-    let newServices: Service[];
-    if (isAddingNew) {
-      newServices = [...services, service];
-    } else {
-      newServices = services.map(s => s.id === service.id ? service : s);
+  const handleSaveService = async (service: Service) => {
+    try {
+      const method = isAddingNew ? 'POST' : 'PUT';
+      await fetch(API_URL, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(service)
+      });
+      await loadServices();
+      setEditingService(null);
+      setIsAddingNew(false);
+    } catch (error) {
+      console.error('Failed to save service:', error);
+      alert('Ошибка при сохранении');
     }
-    saveServices(newServices);
-    setEditingService(null);
-    setIsAddingNew(false);
   };
 
-  const handleDeleteService = (id: string) => {
+  const handleDeleteService = async (id: string) => {
     if (confirm('Удалить этот товар?')) {
-      const newServices = services.filter(s => s.id !== id);
-      saveServices(newServices);
+      try {
+        await fetch(`${API_URL}?id=${id}`, { method: 'DELETE' });
+        await loadServices();
+      } catch (error) {
+        console.error('Failed to delete service:', error);
+        alert('Ошибка при удалении');
+      }
     }
   };
 
