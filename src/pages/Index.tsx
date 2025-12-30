@@ -243,7 +243,7 @@ const Index = () => {
         <div className="flex pt-[73px]">
           {/* Левая навигация */}
           <aside className="fixed left-0 top-[73px] bottom-0 w-64 bg-white dark:bg-[#1a1a1a] border-r border-gray-200 dark:border-gray-800 overflow-y-auto">
-            <nav className="p-3 space-y-0.5">
+            <nav className="px-3 py-4">
               {menuItems.map((item) => {
                 if (item.isSubitem) {
                   return (
@@ -251,41 +251,41 @@ const Index = () => {
                       key={item.id}
                       onClick={() => setActiveSection(item.id)}
                       className={`
-                        w-full flex items-center gap-3 px-3 py-2.5 rounded-lg ml-8
-                        transition-all duration-150
+                        w-full flex items-center pl-11 pr-3 py-2 rounded-md mb-1
+                        transition-colors duration-150
                         ${activeSection === item.id
                           ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
                           : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'
                         }
                       `}
                     >
-                      <Icon name={item.icon} size={18} className="flex-shrink-0" />
+                      <Icon name={item.icon} size={18} className="mr-3 flex-shrink-0" />
                       <span className="text-sm font-medium">{item.title}</span>
                     </button>
                   );
                 }
 
                 return (
-                  <div key={item.id}>
+                  <div key={item.id} className="mb-1">
                     <button
                       onClick={() => {
                         setActiveSection(item.id);
                         if (item.hasSubmenu) toggleSection(item.id);
                       }}
                       className={`
-                        w-full flex items-center gap-3 px-3 py-2.5 rounded-lg
-                        transition-all duration-150
+                        w-full flex items-center px-3 py-2 rounded-md
+                        transition-colors duration-150
                         ${activeSection === item.id
                           ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
                           : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
                         }
                       `}
                     >
-                      <Icon name={item.icon} size={20} className="flex-shrink-0" />
-                      <span className="font-medium flex-1 min-w-0">{item.title}</span>
-                      <div className="flex items-center gap-2 flex-shrink-0">
+                      <Icon name={item.icon} size={20} className="mr-3 flex-shrink-0" />
+                      <span className="font-medium flex-1">{item.title}</span>
+                      <div className="flex items-center gap-1.5 flex-shrink-0">
                         {item.badge && (
-                          <span className="px-2 py-0.5 text-xs font-semibold bg-blue-500 text-white rounded">
+                          <span className="px-1.5 py-0.5 text-xs font-semibold bg-blue-500 text-white rounded">
                             {item.badge}
                           </span>
                         )}
@@ -301,21 +301,21 @@ const Index = () => {
 
                     {/* Подменю */}
                     {item.hasSubmenu && expandedSections.includes(item.id) && (
-                      <div className="mt-0.5 space-y-0.5 ml-8">
+                      <div className="mt-1">
                         {item.submenu?.map((subitem) => (
                           <button
                             key={subitem.id}
                             onClick={() => setActiveSection(subitem.id)}
                             className={`
-                              w-full flex items-center gap-3 px-3 py-2.5 rounded-lg
-                              transition-all duration-150
+                              w-full flex items-center pl-11 pr-3 py-2 rounded-md mb-1
+                              transition-colors duration-150
                               ${activeSection === subitem.id
                                 ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
                                 : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800'
                               }
                             `}
                           >
-                            <Icon name={subitem.icon} size={18} className="flex-shrink-0" />
+                            <Icon name={subitem.icon} size={18} className="mr-3 flex-shrink-0" />
                             <span className="text-sm">{subitem.title}</span>
                           </button>
                         ))}
