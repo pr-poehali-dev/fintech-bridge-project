@@ -16,29 +16,29 @@ const Index = () => {
       id: 'vpn',
       title: 'Бесплатный VPN',
       icon: 'Shield',
-      x: '15%',
-      y: '30%'
+      x: '12%',
+      y: '20%'
     },
     {
       id: 'kyc',
       title: 'Верификация КУС',
       icon: 'UserCheck',
-      x: '85%',
-      y: '30%'
+      x: '88%',
+      y: '20%'
     },
     {
       id: 'esim',
       title: 'Мировые eSIM',
       icon: 'Radio',
-      x: '15%',
-      y: '70%'
+      x: '12%',
+      y: '80%'
     },
     {
       id: 'business',
       title: 'IT для бизнеса',
       icon: 'Lightbulb',
-      x: '85%',
-      y: '70%'
+      x: '88%',
+      y: '80%'
     }
   ];
 
@@ -79,8 +79,8 @@ const Index = () => {
                   <line 
                     x1="50%" 
                     y1="50%" 
-                    x2="15%" 
-                    y2="30%" 
+                    x2="12%" 
+                    y2="20%" 
                     stroke="#2C3E50" 
                     strokeWidth="2.5"
                     className="dark:stroke-white/50"
@@ -89,8 +89,8 @@ const Index = () => {
                   <line 
                     x1="50%" 
                     y1="50%" 
-                    x2="85%" 
-                    y2="30%" 
+                    x2="88%" 
+                    y2="20%" 
                     stroke="#2C3E50" 
                     strokeWidth="2.5"
                     className="dark:stroke-white/50"
@@ -99,8 +99,8 @@ const Index = () => {
                   <line 
                     x1="50%" 
                     y1="50%" 
-                    x2="15%" 
-                    y2="70%" 
+                    x2="12%" 
+                    y2="80%" 
                     stroke="#2C3E50" 
                     strokeWidth="2.5"
                     className="dark:stroke-white/50"
@@ -109,8 +109,8 @@ const Index = () => {
                   <line 
                     x1="50%" 
                     y1="50%" 
-                    x2="85%" 
-                    y2="70%" 
+                    x2="88%" 
+                    y2="80%" 
                     stroke="#2C3E50" 
                     strokeWidth="2.5"
                     className="dark:stroke-white/50"
@@ -119,10 +119,10 @@ const Index = () => {
                   
                   <image 
                     href="https://cdn.poehali.dev/files/2025-12-30 12.11.24.jpg"
-                    x="25%"
-                    y="35%"
-                    width="50%"
-                    height="30%"
+                    x="20%"
+                    y="38%"
+                    width="60%"
+                    height="24%"
                     preserveAspectRatio="xMidYMid meet"
                   />
                   
