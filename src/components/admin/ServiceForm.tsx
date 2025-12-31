@@ -15,6 +15,16 @@ interface Service {
   logoSvg?: string;
   acceptsVisa?: boolean;
   acceptsMastercard?: boolean;
+  acceptsApplePay?: boolean;
+  acceptsGooglePay?: boolean;
+  cardReissue?: boolean;
+  highPaymentApproval?: boolean;
+  cryptoSupport?: boolean;
+  sepaIban?: boolean;
+  achUsd?: boolean;
+  supportedCurrencies?: string[];
+  swift?: boolean;
+  billingRegions?: string[];
   priority?: number;
 }
 
@@ -152,11 +162,11 @@ const ServiceForm = ({ service, onSave, onCancel, darkMode }: ServiceFormProps) 
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Способы оплаты
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                Способы оплаты и карты
               </label>
-              <div className="space-y-2">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <label className="flex items-center gap-2">
                   <input
                     type="checkbox"
@@ -164,7 +174,7 @@ const ServiceForm = ({ service, onSave, onCancel, darkMode }: ServiceFormProps) 
                     onChange={(e) => setFormData({ ...formData, acceptsVisa: e.target.checked })}
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
                   />
-                  <span className="text-sm text-gray-900 dark:text-white">Visa</span>
+                  <span className="text-sm text-gray-900 dark:text-white">VISA</span>
                 </label>
                 <label className="flex items-center gap-2">
                   <input
@@ -175,7 +185,115 @@ const ServiceForm = ({ service, onSave, onCancel, darkMode }: ServiceFormProps) 
                   />
                   <span className="text-sm text-gray-900 dark:text-white">Mastercard</span>
                 </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={formData.acceptsApplePay || false}
+                    onChange={(e) => setFormData({ ...formData, acceptsApplePay: e.target.checked })}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                  <span className="text-sm text-gray-900 dark:text-white">Apple Pay</span>
+                </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={formData.acceptsGooglePay || false}
+                    onChange={(e) => setFormData({ ...formData, acceptsGooglePay: e.target.checked })}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                  <span className="text-sm text-gray-900 dark:text-white">Google Pay</span>
+                </label>
               </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                Возможности и функции
+              </label>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={formData.cardReissue || false}
+                    onChange={(e) => setFormData({ ...formData, cardReissue: e.target.checked })}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                  <span className="text-sm text-gray-900 dark:text-white">Перевыпуск карт</span>
+                </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={formData.highPaymentApproval || false}
+                    onChange={(e) => setFormData({ ...formData, highPaymentApproval: e.target.checked })}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                  <span className="text-sm text-gray-900 dark:text-white">Высокая проходимость</span>
+                </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={formData.cryptoSupport || false}
+                    onChange={(e) => setFormData({ ...formData, cryptoSupport: e.target.checked })}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                  <span className="text-sm text-gray-900 dark:text-white">Поддержка крипты</span>
+                </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={formData.sepaIban || false}
+                    onChange={(e) => setFormData({ ...formData, sepaIban: e.target.checked })}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                  <span className="text-sm text-gray-900 dark:text-white">SEPA IBAN</span>
+                </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={formData.achUsd || false}
+                    onChange={(e) => setFormData({ ...formData, achUsd: e.target.checked })}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                  <span className="text-sm text-gray-900 dark:text-white">ACH USD</span>
+                </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={formData.swift || false}
+                    onChange={(e) => setFormData({ ...formData, swift: e.target.checked })}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                  <span className="text-sm text-gray-900 dark:text-white">SWIFT</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Валюты (через запятую)
+              </label>
+              <input
+                type="text"
+                value={formData.supportedCurrencies?.join(', ') || ''}
+                onChange={(e) => setFormData({ ...formData, supportedCurrencies: e.target.value.split(',').map(c => c.trim()).filter(Boolean) })}
+                className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white"
+                placeholder="USD, EUR, GBP"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Регионы биллинга (через запятую)
+              </label>
+              <input
+                type="text"
+                value={formData.billingRegions?.join(', ') || ''}
+                onChange={(e) => setFormData({ ...formData, billingRegions: e.target.value.split(',').map(r => r.trim()).filter(Boolean) })}
+                className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white"
+                placeholder="Европа, США"
+              />
             </div>
           </div>
 

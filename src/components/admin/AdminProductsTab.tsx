@@ -13,6 +13,19 @@ interface Service {
   cta: string;
   backgroundImage?: string;
   logoSvg?: string;
+  acceptsVisa?: boolean;
+  acceptsMastercard?: boolean;
+  acceptsApplePay?: boolean;
+  acceptsGooglePay?: boolean;
+  cardReissue?: boolean;
+  highPaymentApproval?: boolean;
+  cryptoSupport?: boolean;
+  sepaIban?: boolean;
+  achUsd?: boolean;
+  supportedCurrencies?: string[];
+  swift?: boolean;
+  billingRegions?: string[];
+  priority?: number;
 }
 
 interface AdminProductsTabProps {

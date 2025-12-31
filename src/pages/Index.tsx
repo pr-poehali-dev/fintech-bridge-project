@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 import Sidebar from '@/components/store/Sidebar';
-import FilterSidebar from '@/components/store/FilterSidebar';
+import FilterSidebar, { Filters } from '@/components/store/FilterSidebar';
 import ServiceCard from '@/components/store/ServiceCard';
 import VPNSection from '@/components/store/VPNSection';
 import ESIMSection from '@/components/store/ESIMSection';
@@ -21,6 +21,16 @@ interface Service {
   logoSvg?: string;
   acceptsVisa?: boolean;
   acceptsMastercard?: boolean;
+  acceptsApplePay?: boolean;
+  acceptsGooglePay?: boolean;
+  cardReissue?: boolean;
+  highPaymentApproval?: boolean;
+  cryptoSupport?: boolean;
+  sepaIban?: boolean;
+  achUsd?: boolean;
+  supportedCurrencies?: string[];
+  swift?: boolean;
+  billingRegions?: string[];
   priority?: number;
 }
 
@@ -50,6 +60,12 @@ const Index = () => {
   const [expandedSections, setExpandedSections] = useState<string[]>(['kyc']);
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const [services, setServices] = useState<Service[]>([]);
+  const [filters, setFilters] = useState<Filters>({
+    paymentMethods: { visa: false, mastercard: false, applePay: false, googlePay: false },
+    features: { cardReissue: false, highPaymentApproval: false, cryptoSupport: false, sepaIban: false, achUsd: false, swift: false },
+    currencies: [],
+    billingRegions: [],
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -158,10 +174,45 @@ const Index = () => {
   };
 
   const getFilteredServices = () => {
-    if (activeSection === 'kyc') {
-      return services;
+    let filtered = services;
+
+    if (activeSection !== 'kyc') {
+      filtered = filtered.filter(s => s.category === activeSection);
     }
-    return services.filter(s => s.category === activeSection);
+
+    if (filters.paymentMethods.visa) {
+      filtered = filtered.filter(s => s.acceptsVisa);
+    }
+    if (filters.paymentMethods.mastercard) {
+      filtered = filtered.filter(s => s.acceptsMastercard);
+    }
+    if (filters.paymentMethods.applePay) {
+      filtered = filtered.filter(s => s.acceptsApplePay);
+    }
+    if (filters.paymentMethods.googlePay) {
+      filtered = filtered.filter(s => s.acceptsGooglePay);
+    }
+
+    if (filters.features.cardReissue) {
+      filtered = filtered.filter(s => s.cardReissue);
+    }
+    if (filters.features.highPaymentApproval) {
+      filtered = filtered.filter(s => s.highPaymentApproval);
+    }
+    if (filters.features.cryptoSupport) {
+      filtered = filtered.filter(s => s.cryptoSupport);
+    }
+    if (filters.features.sepaIban) {
+      filtered = filtered.filter(s => s.sepaIban);
+    }
+    if (filters.features.achUsd) {
+      filtered = filtered.filter(s => s.achUsd);
+    }
+    if (filters.features.swift) {
+      filtered = filtered.filter(s => s.swift);
+    }
+
+    return filtered;
   };
 
   const renderContent = () => {
@@ -239,7 +290,7 @@ const Index = () => {
         </div>
       </main>
 
-      {(activeSection.includes('kyc')) && <FilterSidebar />}
+      {(activeSection.includes('kyc')) && <FilterSidebar onFiltersChange={setFilters} />}
     </div>
   );
 };
