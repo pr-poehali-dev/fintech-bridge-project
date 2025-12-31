@@ -65,19 +65,19 @@ const ServiceCard = ({ service, isSelected, onClick }: ServiceCardProps) => {
           )}
         </div>
         
-        <h3 className="text-lg font-semibold text-[#0F172A] mb-2 w-fit">
+        <h3 className="text-lg font-semibold text-black mb-2 w-fit">
           <span className="bg-white/95 backdrop-blur-sm px-2 py-0.5 rounded-full">
             {service.name}
           </span>
         </h3>
         
-        <p className="text-xs text-[#334155] mb-3 w-fit">
+        <p className="text-xs text-black mb-3 w-fit">
           <span className="bg-white/95 backdrop-blur-sm px-2 py-0.5 rounded-full">
             {service.type}
           </span>
         </p>
         
-        <p className="text-sm text-[#64748B] mb-3 flex-1 line-clamp-2">
+        <p className="text-sm text-black mb-3 flex-1 line-clamp-2">
           <span className="bg-white/95 backdrop-blur-sm px-2 py-0.5 rounded-full inline">
             {service.description}
           </span>
@@ -100,10 +100,10 @@ const ServiceCard = ({ service, isSelected, onClick }: ServiceCardProps) => {
         
         <div className="flex items-center justify-between pt-2 mt-auto border-t border-gray-100 bg-white -mx-5 -mb-5 px-5 pb-5">
           <div className="flex items-center justify-between w-full">
-            <span className="text-base font-bold text-[#0F172A]">
+            <span className="text-base font-bold text-black">
               {service.price}
             </span>
-            <div className="flex items-center text-sm font-medium text-blue-600">
+            <div className="flex items-center text-sm font-medium text-black">
               {service.cta}
               <Icon name="ArrowRight" size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
             </div>
