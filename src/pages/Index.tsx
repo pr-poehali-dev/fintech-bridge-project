@@ -218,18 +218,11 @@ const Index = () => {
       <main className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-900">
         <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10">
           <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                {menuItems.find(item => item.id === activeSection)?.title || 
-                 menuItems.flatMap(item => item.submenu || []).find(sub => sub.id === activeSection)?.title || 
-                 'Каталог'}
-              </h2>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                {activeSection.includes('kyc') && 'Профессиональная активация digital-сервисов'}
-                {activeSection === 'vpn' && 'Защищённое подключение к глобальным сервисам'}
-                {activeSection === 'esim' && 'Виртуальные SIM-карты для международных регистраций'}
-              </p>
-            </div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+              {menuItems.find(item => item.id === activeSection)?.title || 
+               menuItems.flatMap(item => item.submenu || []).find(sub => sub.id === activeSection)?.title || 
+               'Каталог'}
+            </h2>
             <Button
               variant="ghost"
               size="icon"
