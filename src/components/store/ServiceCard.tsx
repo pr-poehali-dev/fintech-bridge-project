@@ -55,8 +55,10 @@ const ServiceCard = ({ service, isSelected, onClick }: ServiceCardProps) => {
       <div className="relative z-10 p-5 flex flex-col h-full">
         <div className="flex items-start justify-between mb-3">
           {service.logoSvg ? (
-            <div className="w-14 h-14 p-2 flex items-center justify-center border border-white/95 rounded-lg bg-white/95 backdrop-blur-sm">
-              <img src={service.logoSvg} alt={service.name} className="w-full h-full object-contain" />
+            <div className="w-14 h-14 p-[2px] flex items-center justify-center rounded-lg bg-white/95 backdrop-blur-sm">
+              <div className="w-full h-full flex items-center justify-center">
+                <img src={service.logoSvg} alt={service.name} className="w-full h-full object-contain" />
+              </div>
             </div>
           ) : (
             <div className="w-11 h-11 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
