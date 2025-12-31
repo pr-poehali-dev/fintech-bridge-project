@@ -57,8 +57,12 @@ const ServiceCard = ({ service, isSelected, onClick }: ServiceCardProps) => {
       <div className="relative z-10 p-5 flex flex-col h-full">
         <div className="flex items-start justify-between mb-3">
           {service.logoSvg ? (
-            <div className="w-14 h-14 p-[2px] flex items-center justify-center rounded-lg bg-white/95 backdrop-blur-sm">
-              <div className="w-full h-full flex items-center justify-center">
+            <div className="relative w-14 h-14 p-[2px] flex items-center justify-center rounded-lg overflow-hidden" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
+              <div className="absolute inset-0 rounded-lg animate-shimmer" style={{
+                background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)',
+                backgroundSize: '200% 100%',
+              }} />
+              <div className="relative w-full h-full flex items-center justify-center">
                 <img src={service.logoSvg} alt={service.name} className="w-full h-full object-contain" />
               </div>
             </div>
