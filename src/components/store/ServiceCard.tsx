@@ -1,5 +1,6 @@
 import Icon from '@/components/ui/icon';
 import MastercardLogo from '@/components/ui/MastercardLogo';
+import VisaLogo from '@/components/ui/VisaLogo';
 
 interface Service {
   id: string;
@@ -89,8 +90,8 @@ const ServiceCard = ({ service, isSelected, onClick }: ServiceCardProps) => {
         {(service.acceptsVisa || service.acceptsMastercard) && (
           <div className="flex gap-2 justify-end mb-2">
             {service.acceptsVisa && (
-              <div className="bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold tracking-wider text-[#1A1F71]">
-                VISA
+              <div className="bg-white/95 backdrop-blur-sm px-2 py-1 rounded-full flex items-center">
+                <VisaLogo width={40} height={13} />
               </div>
             )}
             {service.acceptsMastercard && (
