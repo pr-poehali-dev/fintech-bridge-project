@@ -69,16 +69,12 @@ const ServiceCard = ({ service, isSelected, onClick }: ServiceCardProps) => {
           )}
         </div>
         
-        <h3 className="text-lg font-semibold text-black mb-auto w-fit">
-          <span className="bg-white/95 backdrop-blur-sm px-2 py-0.5 rounded-full">
-            {service.name}
-          </span>
+        <h3 className="text-lg font-semibold mb-auto w-fit" style={{ color: 'rgba(255,255,255,0.82)' }}>
+          {service.name}
         </h3>
         
-        <p className="text-sm text-black mb-3 line-clamp-2">
-          <span className="bg-white/95 backdrop-blur-sm px-2 py-0.5 rounded-full inline">
-            {service.description}
-          </span>
+        <p className="text-sm mb-3 line-clamp-2" style={{ color: 'rgba(255,255,255,0.82)' }}>
+          {service.description}
         </p>
         
         {(service.acceptsVisa || service.acceptsMastercard) && (
