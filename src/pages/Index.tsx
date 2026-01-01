@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 import Sidebar from '@/components/store/Sidebar';
+import Header from '@/components/store/Header';
 import FilterSidebar, { Filters } from '@/components/store/FilterSidebar';
 import ServiceCard from '@/components/store/ServiceCard';
 import VPNSection from '@/components/store/VPNSection';
@@ -257,40 +258,31 @@ const Index = () => {
   };
 
   return (
-    <div className={`flex h-screen ${darkMode ? 'dark' : ''}`}>
-      <Sidebar
-        menuItems={menuItems}
-        activeSection={activeSection}
-        expandedSections={expandedSections}
-        onSectionChange={setActiveSection}
-        onToggleSection={toggleSection}
-      />
+    <div className={`flex flex-col h-screen ${darkMode ? 'dark' : ''}`}>
+      <div className="flex flex-1 overflow-hidden">
+        <Sidebar
+          menuItems={menuItems}
+          activeSection={activeSection}
+          expandedSections={expandedSections}
+          onSectionChange={setActiveSection}
+          onToggleSection={toggleSection}
+        />
 
-      <main className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-900">
-        <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-              {menuItems.find(item => item.id === activeSection)?.title || 
-               menuItems.flatMap(item => item.submenu || []).find(sub => sub.id === activeSection)?.title || 
-               'Каталог'}
-            </h2>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleDarkMode}
-              className="rounded-full"
-            >
-              <Icon name={darkMode ? 'Sun' : 'Moon'} size={20} />
-            </Button>
-          </div>
-        </header>
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <Header
+            darkMode={darkMode}
+            onToggleDarkMode={toggleDarkMode}
+          />
 
-        <div className="max-w-7xl mx-auto px-6 py-8">
-          {renderContent()}
+          <main className="flex-1 overflow-auto bg-gray-50 dark:bg-gray-900">
+            <div className="max-w-7xl mx-auto px-6 py-8">
+              {renderContent()}
+            </div>
+          </main>
         </div>
-      </main>
 
-      {(activeSection.includes('kyc')) && <FilterSidebar onFiltersChange={setFilters} />}
+        {(activeSection.includes('kyc')) && <FilterSidebar onFiltersChange={setFilters} />}
+      </div>
     </div>
   );
 };

@@ -27,13 +27,13 @@ const Sidebar = ({
   onToggleSection
 }: SidebarProps) => {
   return (
-    <aside className="w-80 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col">
-      <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
-          HEY, STORE!
+    <aside className="w-80 bg-[#4a4a6a] dark:bg-gray-800 border-r border-gray-700 flex flex-col">
+      <div className="p-6 border-b border-gray-700">
+        <h1 className="text-2xl font-bold text-white mb-1">
+          Дай Доступ!
         </h1>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          Активация digital-сервисов
+        <p className="text-sm text-red-400">
+          подписки и игры без санкций
         </p>
       </div>
 
