@@ -63,7 +63,8 @@ const Index = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [filters, setFilters] = useState<Filters>({
     paymentMethods: { visa: false, mastercard: false, applePay: false, googlePay: false },
-    features: { cardReissue: false, highPaymentApproval: false, cryptoSupport: false, sepaIban: false, achUsd: false, swift: false },
+    features: { cardReissue: false, highPaymentApproval: false, cryptoSupport: false },
+    accounts: { sepa: false, eurIban: false, swift: false, usdAch: false },
     currencies: [],
     billingRegions: [],
   });
@@ -209,14 +210,18 @@ const Index = () => {
     if (filters.features.cryptoSupport) {
       filtered = filtered.filter(s => s.cryptoSupport);
     }
-    if (filters.features.sepaIban) {
+
+    if (filters.accounts.sepa) {
       filtered = filtered.filter(s => s.sepaIban);
     }
-    if (filters.features.achUsd) {
-      filtered = filtered.filter(s => s.achUsd);
+    if (filters.accounts.eurIban) {
+      filtered = filtered.filter(s => s.sepaIban);
     }
-    if (filters.features.swift) {
+    if (filters.accounts.swift) {
       filtered = filtered.filter(s => s.swift);
+    }
+    if (filters.accounts.usdAch) {
+      filtered = filtered.filter(s => s.achUsd);
     }
 
     return filtered;

@@ -16,9 +16,12 @@ export interface Filters {
     cardReissue: boolean;
     highPaymentApproval: boolean;
     cryptoSupport: boolean;
-    sepaIban: boolean;
-    achUsd: boolean;
+  };
+  accounts: {
+    sepa: boolean;
+    eurIban: boolean;
     swift: boolean;
+    usdAch: boolean;
   };
   currencies: string[];
   billingRegions: string[];
@@ -36,9 +39,12 @@ const FilterSidebar = ({ onFiltersChange }: FilterSidebarProps) => {
       cardReissue: false,
       highPaymentApproval: false,
       cryptoSupport: false,
-      sepaIban: false,
-      achUsd: false,
+    },
+    accounts: {
+      sepa: false,
+      eurIban: false,
       swift: false,
+      usdAch: false,
     },
     currencies: [],
     billingRegions: [],
@@ -83,9 +89,12 @@ const FilterSidebar = ({ onFiltersChange }: FilterSidebarProps) => {
         cardReissue: false,
         highPaymentApproval: false,
         cryptoSupport: false,
-        sepaIban: false,
-        achUsd: false,
+      },
+      accounts: {
+        sepa: false,
+        eurIban: false,
         swift: false,
+        usdAch: false,
       },
       currencies: [],
       billingRegions: [],
@@ -93,9 +102,21 @@ const FilterSidebar = ({ onFiltersChange }: FilterSidebarProps) => {
     updateFilters(emptyFilters);
   };
 
+  const toggleAccount = (account: keyof Filters['accounts']) => {
+    const newFilters = {
+      ...filters,
+      accounts: {
+        ...filters.accounts,
+        [account]: !filters.accounts[account],
+      },
+    };
+    updateFilters(newFilters);
+  };
+
   const hasActiveFilters = 
     Object.values(filters.paymentMethods).some(v => v) ||
     Object.values(filters.features).some(v => v) ||
+    Object.values(filters.accounts).some(v => v) ||
     filters.currencies.length > 0 ||
     filters.billingRegions.length > 0;
 
@@ -153,7 +174,7 @@ const FilterSidebar = ({ onFiltersChange }: FilterSidebarProps) => {
                 onChange={() => togglePaymentMethod('applePay')}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
               />
-              <Icon name="Smartphone" size={14} className="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300" />
+              <span className="text-sm">🍎</span>
               <span className="text-sm text-gray-700 dark:text-gray-300">Apple Pay</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer group">
@@ -204,35 +225,54 @@ const FilterSidebar = ({ onFiltersChange }: FilterSidebarProps) => {
               <Icon name="Coins" size={14} className="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300" />
               <span className="text-sm text-gray-700 dark:text-gray-300">Поддержка крипты</span>
             </label>
+
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">
+            Счета
+          </h3>
+          <div className="space-y-2">
             <label className="flex items-center gap-2 cursor-pointer group">
               <input
                 type="checkbox"
-                checked={filters.features.sepaIban}
-                onChange={() => toggleFeature('sepaIban')}
+                checked={filters.accounts.sepa}
+                onChange={() => toggleAccount('sepa')}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
               />
               <Icon name="Building2" size={14} className="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300" />
-              <span className="text-sm text-gray-700 dark:text-gray-300">SEPA IBAN</span>
+              <span className="text-sm text-gray-700 dark:text-gray-300">SEPA</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer group">
               <input
                 type="checkbox"
-                checked={filters.features.achUsd}
-                onChange={() => toggleFeature('achUsd')}
+                checked={filters.accounts.eurIban}
+                onChange={() => toggleAccount('eurIban')}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
               />
-              <Icon name="DollarSign" size={14} className="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300" />
-              <span className="text-sm text-gray-700 dark:text-gray-300">ACH USD</span>
+              <Icon name="CreditCard" size={14} className="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300" />
+              <span className="text-sm text-gray-700 dark:text-gray-300">EUR IBAN</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer group">
               <input
                 type="checkbox"
-                checked={filters.features.swift}
-                onChange={() => toggleFeature('swift')}
+                checked={filters.accounts.swift}
+                onChange={() => toggleAccount('swift')}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
               />
               <Icon name="Zap" size={14} className="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300" />
               <span className="text-sm text-gray-700 dark:text-gray-300">SWIFT</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={filters.accounts.usdAch}
+                onChange={() => toggleAccount('usdAch')}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+              />
+              <Icon name="DollarSign" size={14} className="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300" />
+              <span className="text-sm text-gray-700 dark:text-gray-300">USD ACH</span>
             </label>
           </div>
         </div>
