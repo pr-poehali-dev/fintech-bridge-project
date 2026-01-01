@@ -41,6 +41,7 @@ interface AdminProductsTabProps {
   onDelete: (id: string) => void;
   onSave: (service: Service) => void;
   onCancel: () => void;
+  onPriorityChange: (id: string, direction: 'up' | 'down') => void;
 }
 
 const AdminProductsTab = ({
@@ -52,7 +53,8 @@ const AdminProductsTab = ({
   onEdit,
   onDelete,
   onSave,
-  onCancel
+  onCancel,
+  onPriorityChange
 }: AdminProductsTabProps) => {
   return (
     <div>
@@ -135,6 +137,24 @@ const AdminProductsTab = ({
                     </div>
                   </div>
                   <div className="flex gap-2 ml-4">
+                    <div className="flex flex-col gap-1">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => onPriorityChange(service.id, 'up')}
+                        className="h-8 px-2"
+                      >
+                        <Icon name="ChevronUp" size={14} />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => onPriorityChange(service.id, 'down')}
+                        className="h-8 px-2"
+                      >
+                        <Icon name="ChevronDown" size={14} />
+                      </Button>
+                    </div>
                     <Button
                       variant="outline"
                       size="sm"

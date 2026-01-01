@@ -213,6 +213,39 @@ const Admin = () => {
     setIsAddingNew(false);
   };
 
+  const handlePriorityChange = async (id: string, direction: 'up' | 'down') => {
+    const currentIndex = services.findIndex(s => s.id === id);
+    if (currentIndex === -1) return;
+
+    const targetIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
+    if (targetIndex < 0 || targetIndex >= services.length) return;
+
+    const newServices = [...services];
+    [newServices[currentIndex], newServices[targetIndex]] = [newServices[targetIndex], newServices[currentIndex]];
+
+    const updatedServices = newServices.map((service, index) => ({
+      ...service,
+      priority: newServices.length - index
+    }));
+
+    setServices(updatedServices);
+
+    try {
+      await Promise.all(
+        updatedServices.map(service =>
+          fetch(API_URL, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(service)
+          })
+        )
+      );
+    } catch (error) {
+      console.error('Failed to update priorities:', error);
+      await loadServices();
+    }
+  };
+
   if (!isAuthenticated) {
     return (
       <AdminLoginForm
@@ -293,6 +326,7 @@ const Admin = () => {
             onDelete={handleDeleteService}
             onSave={handleSaveService}
             onCancel={handleCancelEdit}
+            onPriorityChange={handlePriorityChange}
           />
         )}
 
