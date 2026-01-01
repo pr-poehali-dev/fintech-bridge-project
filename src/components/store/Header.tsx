@@ -31,7 +31,7 @@ const Header = ({ onSearch, darkMode, onToggleDarkMode }: HeaderProps) => {
           />
           <Input
             type="text"
-            placeholder="Искать Подписки и игры"
+            placeholder="Поиск товаров и услуг"
             value={searchQuery}
             onChange={handleSearchChange}
             className="pl-10"
