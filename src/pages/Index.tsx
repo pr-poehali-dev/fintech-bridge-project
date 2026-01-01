@@ -32,7 +32,14 @@ interface Service {
   supportedCurrencies?: string[];
   swift?: boolean;
   billingRegions?: string[];
+  cardBillingCountries?: string[];
   priority?: number;
+}
+
+interface Country {
+  code: string;
+  name: string;
+  flag: string;
 }
 
 const API_URL = 'https://functions.poehali.dev/692cf256-c3fb-49b8-9844-ae94296d195a';
@@ -67,15 +74,21 @@ const Index = () => {
     accounts: { sepa: false, eurIban: false, swift: false, usdAch: false },
     currencies: [],
     billingRegions: [],
+    cardBillingCountries: [],
   });
+  const [countries, setCountries] = useState<Country[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const loadServices = async () => {
+    const loadData = async () => {
       try {
-        const response = await fetch(API_URL);
-        if (response.ok) {
-          const data = await response.json();
+        const [servicesRes, countriesRes] = await Promise.all([
+          fetch(API_URL),
+          fetch(`${API_URL}?resource=countries`)
+        ]);
+
+        if (servicesRes.ok) {
+          const data = await servicesRes.json();
           if (data.length === 0) {
             setServices(defaultServices);
           } else {
@@ -84,13 +97,18 @@ const Index = () => {
         } else {
           setServices(defaultServices);
         }
+
+        if (countriesRes.ok) {
+          const countriesData = await countriesRes.json();
+          setCountries(countriesData);
+        }
       } catch (error) {
-        console.error('Failed to load services:', error);
+        console.error('Failed to load data:', error);
         setServices(defaultServices);
       }
     };
 
-    loadServices();
+    loadData();
   }, []);
 
   const toggleDarkMode = () => {
@@ -224,6 +242,13 @@ const Index = () => {
       filtered = filtered.filter(s => s.achUsd);
     }
 
+    if (filters.cardBillingCountries.length > 0) {
+      filtered = filtered.filter(s => 
+        s.cardBillingCountries && 
+        filters.cardBillingCountries.some(country => s.cardBillingCountries?.includes(country))
+      );
+    }
+
     return filtered;
   };
 
@@ -292,7 +317,7 @@ const Index = () => {
               </div>
             </main>
 
-            {(activeSection.includes('kyc')) && <FilterSidebar onFiltersChange={setFilters} />}
+            {(activeSection.includes('kyc')) && <FilterSidebar onFiltersChange={setFilters} availableCountries={countries} />}
           </div>
         </div>
       </div>

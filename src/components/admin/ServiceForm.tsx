@@ -28,6 +28,7 @@ interface Service {
   supportedCurrencies?: string[];
   swift?: boolean;
   billingRegions?: string[];
+  cardBillingCountries?: string[];
   priority?: number;
 }
 
@@ -38,16 +39,38 @@ interface ServiceFormProps {
   darkMode: boolean;
 }
 
+const API_URL = 'https://functions.poehali.dev/692cf256-c3fb-49b8-9844-ae94296d195a';
+
+interface Country {
+  code: string;
+  name: string;
+  flag: string;
+}
+
 const ServiceForm = ({ service, onSave, onCancel, darkMode }: ServiceFormProps) => {
   const [formData, setFormData] = useState<Service>(service);
   const [backgroundPreview, setBackgroundPreview] = useState<string | undefined>(service.backgroundImage);
   const [logoPreview, setLogoPreview] = useState<string | undefined>(service.logoSvg);
+  const [countries, setCountries] = useState<Country[]>([]);
 
   useEffect(() => {
     setFormData(service);
     setBackgroundPreview(service.backgroundImage);
     setLogoPreview(service.logoSvg);
   }, [service]);
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await fetch(`${API_URL}?resource=countries`);
+        const data = await response.json();
+        setCountries(data);
+      } catch (error) {
+        console.error('Failed to fetch countries:', error);
+      }
+    };
+    fetchCountries();
+  }, []);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, type: 'background' | 'logo') => {
     const file = e.target.files?.[0];
@@ -343,6 +366,32 @@ const ServiceForm = ({ service, onSave, onCancel, darkMode }: ServiceFormProps) 
               className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white"
               required
             />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+              Адрес карт
+            </label>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-h-60 overflow-y-auto p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              {countries.map((country) => (
+                <label key={country.code} className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={formData.cardBillingCountries?.includes(country.code) || false}
+                    onChange={(e) => {
+                      const currentCountries = formData.cardBillingCountries || [];
+                      const newCountries = e.target.checked
+                        ? [...currentCountries, country.code]
+                        : currentCountries.filter(c => c !== country.code);
+                      setFormData({ ...formData, cardBillingCountries: newCountries });
+                    }}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                  <span className="text-lg">{country.flag}</span>
+                  <span className="text-sm text-gray-900 dark:text-white">{country.name}</span>
+                </label>
+              ))}
+            </div>
           </div>
 
           <div className="border-t border-gray-200 dark:border-gray-700 pt-6">

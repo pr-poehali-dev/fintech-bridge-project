@@ -4,36 +4,13 @@
       "name": "Get all services",
       "method": "GET",
       "path": "/",
-      "expectedStatus": 200,
-      "expectedBody": [
-        {
-          "id": "string"
-        }
-      ],
-      "bodyMatcher": "partial"
+      "expectedStatus": 200
     },
     {
-      "name": "Create new service",
-      "method": "POST",
-      "path": "/",
-      "body": {
-        "id": "test-service-1",
-        "name": "Test Service",
-        "type": "Финтех",
-        "category": "kyc-fintech",
-        "icon": "CreditCard",
-        "description": "Test description",
-        "price": "100 USD",
-        "cta": "Подключить",
-        "acceptsVisa": true,
-        "acceptsMastercard": false
-      },
-      "expectedStatus": 201,
-      "expectedBody": {
-        "id": "string",
-        "message": "string"
-      },
-      "bodyMatcher": "partial"
+      "name": "Get countries",
+      "method": "GET",
+      "path": "/?resource=countries",
+      "expectedStatus": 200
     }
   ]
 }

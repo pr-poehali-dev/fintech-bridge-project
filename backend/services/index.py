@@ -10,6 +10,8 @@ def get_db_connection():
 def handler(event: dict, context) -> dict:
     """API для управления сервисами (CRUD операции)"""
     method = event.get('httpMethod', 'GET')
+    query_params = event.get('queryStringParameters', {}) or {}
+    resource = query_params.get('resource', '')
     
     if method == 'OPTIONS':
         return {
@@ -26,7 +28,19 @@ def handler(event: dict, context) -> dict:
         conn = get_db_connection()
         cur = conn.cursor(cursor_factory=RealDictCursor)
         
-        if method == 'GET':
+        if resource == 'countries' and method == 'GET':
+            cur.execute('SELECT code, name, flag FROM countries ORDER BY name')
+            countries = cur.fetchall()
+            return {
+                'statusCode': 200,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                'body': json.dumps([dict(c) for c in countries])
+            }
+        
+        elif method == 'GET':
             cur.execute('''
                 SELECT id, name, type, category, icon, description, price, cta,
                        line1, line2, line3,
@@ -36,7 +50,8 @@ def handler(event: dict, context) -> dict:
                        card_reissue as "cardReissue", high_payment_approval as "highPaymentApproval",
                        crypto_support as "cryptoSupport", sepa_iban as "sepaIban",
                        ach_usd as "achUsd", swift, supported_currencies as "supportedCurrencies",
-                       billing_regions as "billingRegions", priority
+                       billing_regions as "billingRegions", card_billing_countries as "cardBillingCountries",
+                       priority
                 FROM services
                 ORDER BY priority DESC, created_at DESC
             ''')
@@ -61,8 +76,8 @@ def handler(event: dict, context) -> dict:
                     background_image, logo_svg, accepts_visa, accepts_mastercard,
                     accepts_apple_pay, accepts_google_pay, card_reissue, high_payment_approval,
                     crypto_support, sepa_iban, ach_usd, swift, supported_currencies,
-                    billing_regions, priority
-                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    billing_regions, card_billing_countries, priority
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 RETURNING id
             ''', (
                 data['id'], data['name'], data['type'], data['category'],
@@ -75,6 +90,7 @@ def handler(event: dict, context) -> dict:
                 data.get('cryptoSupport', False), data.get('sepaIban', False),
                 data.get('achUsd', False), data.get('swift', False),
                 data.get('supportedCurrencies', []), data.get('billingRegions', []),
+                data.get('cardBillingCountries', []),
                 data.get('priority', 0)
             ))
             
@@ -105,6 +121,7 @@ def handler(event: dict, context) -> dict:
                     crypto_support = %s, sepa_iban = %s,
                     ach_usd = %s, swift = %s,
                     supported_currencies = %s, billing_regions = %s,
+                    card_billing_countries = %s,
                     priority = %s,
                     updated_at = CURRENT_TIMESTAMP
                 WHERE id = %s
@@ -119,6 +136,7 @@ def handler(event: dict, context) -> dict:
                 data.get('cryptoSupport', False), data.get('sepaIban', False),
                 data.get('achUsd', False), data.get('swift', False),
                 data.get('supportedCurrencies', []), data.get('billingRegions', []),
+                data.get('cardBillingCountries', []),
                 data.get('priority', 0),
                 data['id']
             ))

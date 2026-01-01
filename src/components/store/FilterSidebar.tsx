@@ -3,6 +3,7 @@ import Icon from '@/components/ui/icon';
 
 interface FilterSidebarProps {
   onFiltersChange: (filters: Filters) => void;
+  availableCountries: Array<{ code: string; name: string; flag: string }>;
 }
 
 export interface Filters {
@@ -25,9 +26,10 @@ export interface Filters {
   };
   currencies: string[];
   billingRegions: string[];
+  cardBillingCountries: string[];
 }
 
-const FilterSidebar = ({ onFiltersChange }: FilterSidebarProps) => {
+const FilterSidebar = ({ onFiltersChange, availableCountries }: FilterSidebarProps) => {
   const [filters, setFilters] = useState<Filters>({
     paymentMethods: {
       visa: false,
@@ -48,6 +50,7 @@ const FilterSidebar = ({ onFiltersChange }: FilterSidebarProps) => {
     },
     currencies: [],
     billingRegions: [],
+    cardBillingCountries: [],
   });
 
   const updateFilters = (newFilters: Filters) => {
@@ -98,6 +101,7 @@ const FilterSidebar = ({ onFiltersChange }: FilterSidebarProps) => {
       },
       currencies: [],
       billingRegions: [],
+      cardBillingCountries: [],
     };
     updateFilters(emptyFilters);
   };
@@ -113,12 +117,25 @@ const FilterSidebar = ({ onFiltersChange }: FilterSidebarProps) => {
     updateFilters(newFilters);
   };
 
+  const toggleCountry = (countryCode: string) => {
+    const newCountries = filters.cardBillingCountries.includes(countryCode)
+      ? filters.cardBillingCountries.filter(c => c !== countryCode)
+      : [...filters.cardBillingCountries, countryCode];
+    
+    const newFilters = {
+      ...filters,
+      cardBillingCountries: newCountries,
+    };
+    updateFilters(newFilters);
+  };
+
   const hasActiveFilters = 
     Object.values(filters.paymentMethods).some(v => v) ||
     Object.values(filters.features).some(v => v) ||
     Object.values(filters.accounts).some(v => v) ||
     filters.currencies.length > 0 ||
-    filters.billingRegions.length > 0;
+    filters.billingRegions.length > 0 ||
+    filters.cardBillingCountries.length > 0;
 
   return (
     <aside className="w-72 bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 flex flex-col">
@@ -174,7 +191,7 @@ const FilterSidebar = ({ onFiltersChange }: FilterSidebarProps) => {
                 onChange={() => togglePaymentMethod('applePay')}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
               />
-              <span className="text-sm">🍎</span>
+              <Icon name="Apple" size={14} className="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300" />
               <span className="text-sm text-gray-700 dark:text-gray-300">Apple Pay</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer group">
@@ -274,6 +291,26 @@ const FilterSidebar = ({ onFiltersChange }: FilterSidebarProps) => {
               <Icon name="DollarSign" size={14} className="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300" />
               <span className="text-sm text-gray-700 dark:text-gray-300">USD ACH</span>
             </label>
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">
+            Адрес карт
+          </h3>
+          <div className="space-y-2 max-h-48 overflow-y-auto">
+            {availableCountries.map((country) => (
+              <label key={country.code} className="flex items-center gap-2 cursor-pointer group">
+                <input
+                  type="checkbox"
+                  checked={filters.cardBillingCountries.includes(country.code)}
+                  onChange={() => toggleCountry(country.code)}
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                />
+                <span className="text-sm">{country.flag}</span>
+                <span className="text-sm text-gray-700 dark:text-gray-300">{country.name}</span>
+              </label>
+            ))}
           </div>
         </div>
       </div>
