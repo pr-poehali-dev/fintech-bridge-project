@@ -29,6 +29,7 @@ def handler(event: dict, context) -> dict:
         if method == 'GET':
             cur.execute('''
                 SELECT id, name, type, category, icon, description, price, cta,
+                       line1, line2, line3,
                        background_image as "backgroundImage", logo_svg as "logoSvg",
                        accepts_visa as "acceptsVisa", accepts_mastercard as "acceptsMastercard",
                        accepts_apple_pay as "acceptsApplePay", accepts_google_pay as "acceptsGooglePay",
@@ -56,15 +57,17 @@ def handler(event: dict, context) -> dict:
             cur.execute('''
                 INSERT INTO services (
                     id, name, type, category, icon, description, price, cta,
+                    line1, line2, line3,
                     background_image, logo_svg, accepts_visa, accepts_mastercard,
                     accepts_apple_pay, accepts_google_pay, card_reissue, high_payment_approval,
                     crypto_support, sepa_iban, ach_usd, swift, supported_currencies,
                     billing_regions, priority
-                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 RETURNING id
             ''', (
                 data['id'], data['name'], data['type'], data['category'],
                 data['icon'], data['description'], data['price'], data['cta'],
+                data.get('line1'), data.get('line2'), data.get('line3'),
                 data.get('backgroundImage'), data.get('logoSvg'),
                 data.get('acceptsVisa', False), data.get('acceptsMastercard', False),
                 data.get('acceptsApplePay', False), data.get('acceptsGooglePay', False),
@@ -94,6 +97,7 @@ def handler(event: dict, context) -> dict:
                 UPDATE services SET
                     name = %s, type = %s, category = %s, icon = %s,
                     description = %s, price = %s, cta = %s,
+                    line1 = %s, line2 = %s, line3 = %s,
                     background_image = %s, logo_svg = %s,
                     accepts_visa = %s, accepts_mastercard = %s,
                     accepts_apple_pay = %s, accepts_google_pay = %s,
@@ -107,6 +111,7 @@ def handler(event: dict, context) -> dict:
             ''', (
                 data['name'], data['type'], data['category'], data['icon'],
                 data['description'], data['price'], data['cta'],
+                data.get('line1'), data.get('line2'), data.get('line3'),
                 data.get('backgroundImage'), data.get('logoSvg'),
                 data.get('acceptsVisa', False), data.get('acceptsMastercard', False),
                 data.get('acceptsApplePay', False), data.get('acceptsGooglePay', False),
