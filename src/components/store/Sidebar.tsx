@@ -64,7 +64,7 @@ const Sidebar = ({
               </div>
               <div className="flex items-center gap-2">
                 {item.badge && (
-                  <span className="text-xs px-2 py-0.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full font-semibold">
+                  <span className="text-xs px-2 py-0.5 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded-full font-semibold">
                     {item.badge}
                   </span>
                 )}
