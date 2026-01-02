@@ -9,6 +9,9 @@ interface Service {
   category: string;
   icon: string;
   description: string;
+  line1?: string;
+  line2?: string;
+  line3?: string;
   price: string;
   cta: string;
   backgroundImage?: string;
@@ -77,8 +80,13 @@ const ServiceCard = ({ service, isSelected, onClick }: ServiceCardProps) => {
           {service.name}
         </h3>
         
-        <div className="text-sm mb-auto" style={{ color: 'rgba(255,255,255,0.82)' }}>
-          <p className="line-clamp-3">{service.description}</p>
+        <div className="text-sm mb-auto space-y-0.5" style={{ color: 'rgba(255,255,255,0.82)' }}>
+          {service.line1 && <p>{service.line1}</p>}
+          {service.line2 && <p>{service.line2}</p>}
+          {service.line3 && <p>{service.line3}</p>}
+          {!service.line1 && !service.line2 && !service.line3 && (
+            <p className="line-clamp-2">{service.description}</p>
+          )}
         </div>
         
         {(service.acceptsVisa || service.acceptsMastercard) && (

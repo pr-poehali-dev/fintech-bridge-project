@@ -9,6 +9,9 @@ interface Service {
   category: string;
   icon: string;
   description: string;
+  line1?: string;
+  line2?: string;
+  line3?: string;
   price: string;
   cta: string;
   backgroundImage?: string;
@@ -108,8 +111,11 @@ const AdminProductsTab = ({
                       <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
                         {service.type} • {service.category}
                       </p>
-                      <div className="text-sm text-gray-600 dark:text-gray-300 mb-3">
-                        <p>{service.description}</p>
+                      <div className="text-sm text-gray-600 dark:text-gray-300 mb-3 space-y-1">
+                        {service.line1 && <p>{service.line1}</p>}
+                        {service.line2 && <p>{service.line2}</p>}
+                        {service.line3 && <p>{service.line3}</p>}
+                        {!service.line1 && !service.line2 && !service.line3 && <p>{service.description}</p>}
                       </div>
                       <p className="text-lg font-bold text-gray-900 dark:text-white">
                         {service.price}

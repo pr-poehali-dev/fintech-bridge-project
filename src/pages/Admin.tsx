@@ -15,6 +15,9 @@ interface Service {
   category: string;
   icon: string;
   description: string;
+  line1?: string;
+  line2?: string;
+  line3?: string;
   price: string;
   cta: string;
   backgroundImage?: string;

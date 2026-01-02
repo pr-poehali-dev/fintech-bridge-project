@@ -9,6 +9,9 @@ interface Service {
   category: string;
   icon: string;
   description: string;
+  line1?: string;
+  line2?: string;
+  line3?: string;
   price: string;
   cta: string;
   backgroundImage?: string;
@@ -160,14 +163,47 @@ const ServiceForm = ({ service, onSave, onCancel, darkMode }: ServiceFormProps) 
 
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Описание
+              Описание (общее, используется если строки не заполнены)
             </label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white"
-              rows={3}
+              rows={2}
             />
+          </div>
+
+          <div className="space-y-3">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Строки описания (гибкое управление)
+            </label>
+            <div>
+              <input
+                type="text"
+                value={formData.line1 || ''}
+                onChange={(e) => setFormData({ ...formData, line1: e.target.value })}
+                className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white"
+                placeholder="Строка 1"
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                value={formData.line2 || ''}
+                onChange={(e) => setFormData({ ...formData, line2: e.target.value })}
+                className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white"
+                placeholder="Строка 2"
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                value={formData.line3 || ''}
+                onChange={(e) => setFormData({ ...formData, line3: e.target.value })}
+                className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white"
+                placeholder="Строка 3"
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
